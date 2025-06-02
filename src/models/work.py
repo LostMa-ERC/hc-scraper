@@ -24,12 +24,8 @@ class PartialWork:
 class WorkModel(BaseModel):
     id: int
     title: str
-    references: list[str | None] = Field(
-        default=[], serialization_alias="described_at_URL"
-    )
-    status: str | None = Field(
-        default="unknown", serialization_alias="tradition_status"
-    )
+    references: list[str | None] = Field(default=[])
+    status: str | None = Field(default="unknown")
 
     @field_validator("status")
     def validate_status(cls, value: str | None):

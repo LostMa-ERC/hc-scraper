@@ -24,8 +24,9 @@ class WorkResultPage:
         self._witnesses: Tag | None = self.__content.find("ol", class_="signaturen")
 
     def iter_witnesses(self) -> Generator[Tag, None, None]:
-        for witness in self._witnesses.find_all("li"):
-            yield witness
+        if self._witnesses is not None:
+            for witness in self._witnesses.find_all("li"):
+                yield witness
 
 
 class WorkMetadata(WorkResultPage):
