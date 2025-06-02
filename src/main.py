@@ -8,7 +8,7 @@ from rich.progress import (
     TimeElapsedColumn,
 )
 
-from src.scrapers.works import WorksPage, WorkMetadata
+from src.scrapers.works import WorksPage, WorkMetadata, PartialWork
 from src.scrapers.witness import WitnessScraper
 from src.database import Database
 
@@ -43,23 +43,28 @@ def works():
 
         # Iterate through the scraped works' notices
         for work_notice in work_notices:
-            # Only if the work is not yet in the database, scrape it
-            if db.work_is_present(id=work_notice.id) is False:
-                # Fetch the work's result page
-                resp = session.get(work_notice.url)
-                html = resp.content
-
-                # Model and insert the work metadata
-                work_model = WorkMetadata(id=work_notice.id, html=html).validate()
-                metadata = work_model.model_dump()
-                db.insert_work(data=metadata)
-
-                # Model and insert the witness metadata
-                for witness_doc in WitnessScraper(html=html).get_codicological_unit():
-                    if db.witness_is_present(work_notice.id, witness_doc) is False:
-                        db.insert_witness(work_id=work_notice.id, unit_id=witness_doc)
-
+            scrape_work(db=db, work_notice=work_notice, session=session)
             p.advance(t)
+
+
+def scrape_work(db: Database, work_notice: PartialWork, session: requests.Session):
+    # Only if the work is not yet in the database, scrape it
+    if db.work_is_present(id=work_notice.id) is False:
+        # Fetch the work's result page
+        resp = session.get(work_notice.url)
+        if resp.status_code == 404:
+            return
+        html = resp.content
+
+        # Model and insert the work metadata
+        work_model = WorkMetadata(id=work_notice.id, html=html).validate()
+        metadata = work_model.model_dump()
+        db.insert_work(data=metadata)
+
+        # Model and insert the witness metadata
+        for witness_doc in WitnessScraper(html=html).get_codicological_unit():
+            if db.witness_is_present(work_notice.id, witness_doc) is False:
+                db.insert_witness(work_id=work_notice.id, unit_id=witness_doc)
 
 
 if __name__ == "__main__":
