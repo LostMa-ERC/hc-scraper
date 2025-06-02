@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+                Handschriftencensus | 
+                Wolfram von Eschenbach: 'Parzival'        </title>
+        
+		<link href="/favicon.ico" type="image/x-icon" rel="icon"><link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"><link rel="stylesheet" type="text/css" href="/css/cookieconsent.min.css" />
+<script type="text/javascript" src="/js/cookieconsent.min.js"></script>
+<script type="text/javascript">
+window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#252e39"
+        },
+        "button": {
+          "background": "#d5d5ff"
+        }
+      },
+      "cookie": {
+        "domain": "handschriftencensus.de",
+        "expiryDays": "7"
+      },
+      "type": "info",
+      onStatusChange: function(status) {
+        if(this.hasConsented()){
+        	$.getScript( "/js/matomo.js", function( data, textStatus, jqxhr ) {
+        		$.getScript( "/js/statistic.js", function( data, textStatus, jqxhr ) {
+                    console.log( "Cookie allowed. Thank you! :)" );
+        		});
+    		});
+        }
+	  },
+      "content": {
+    	  "message": "Der Handschriftencensus verwendet ein anonymes Statistik-Cookie, um die Nutzung der Online-Präsenz auswerten zu können. Mehr dazu in der ",
+          "dismiss": "Okay",
+          "link": "Datenschutzerklärung",
+        "href": "/privacy"
+      }
+    })
+});
+</script>
+
+<script src="/cache/js/jquery-default.js"></script><link rel="stylesheet" href="/cache/css/css-default.css">
+		<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var clipboard = new ClipboardJS('#permalinkURL');
+	clipboard.on('success', function(e) {
+		$('#permalinkURL').trigger('mouseleave');
+		$('#permalinkURL').attr('title',"Permalink kopiert!");
+		$('#permalinkURL').trigger('mouseover');
+	    e.clearSelection();
+	});
+	$('#permalinkURL').attr('title',"Permalink in die Zwischenablage kopieren");
+	$('#permalinkURL').click(function(event) {
+		event.preventDefault();
+	});
+	$('#permalinkURL').mouseleave(function(event) {
+		$(this).attr('title',"Permalink in die Zwischenablage kopieren");
+	});
+});
+</script>    </head>
+    <body>
+    		<header>
+        <div class="container text-center clearfix">
+            <h1><a href="/">Handschriften&shy;census</a></h1>
+    		<a id="logo_mainz" href="https://adwmainz.de" target="_blank">
+    			<img src="/img/adwm_big.png" alt="Akademie der Wissenschaften und der Literatur Mainz" title="Akademie der Wissenschaften und der Literatur Mainz"/>
+			</a>
+    		<a id="logo_mr" href="https://uni-marburg.de" target="_blank">
+    			<img src="/img/umr_logo_sw_trans_1280.png" alt="Philipps-Universität Marburg" title="Philipps-Universität Marburg"/>
+			</a>
+            <h2 class="tagline"><a href="/">Eine Bestandsaufnahme der handschriftlichen Über&shy;lieferung deutschsprachiger Texte des Mittelalters</a></h2> 
+            <span id="localization">
+            	<a href="/language/de" title="deutsch">de</a>
+            	|
+            	<a href="/language/en" title="english">en</a>
+            </span>
+        </div>
+    </header>
+        <main class="main">
+    		<div class="container">
+            	<div class="navbar-container">
+                <div class="navbar">
+                	                	<div class="dropdown">
+                		<button class="dropbtn">
+                			Verzeichnisse <i class="fa fa-caret-down"><!-- Verzeichnisse --></i>
+                		</button>
+                		<div class="dropdown-content">
+                			<a href="/hss">»&nbsp;Aufbewahrungsorte</a> 
+                			<a href="/werke">»&nbsp;Werke</a>
+                			<a href="/personen">»&nbsp;Personen</a>
+                			<a href="/abbildungen">»&nbsp;Abbildungen</a>
+                		</div>
+                	</div>
+                	<div class="dropdown">
+                		<button class="dropbtn">
+                			Literatur <i class="fa fa-caret-down"><!-- Literatur --></i>
+                		</button>
+                		<div class="dropdown-content">
+                			<a href="/forschungsliteratur">»&nbsp;Forschungsliteratur</a> 
+                			<a href="/forschungsliteratur/neuerscheinungen">»&nbsp;Neuerscheinungen 2024/2025</a>
+                			<a href="/forschungsliteratur/kataloge">»&nbsp;Handschriftenkataloge</a>
+                			<a href="https://editionsbericht.de" target="_blank">»&nbsp;Editionsbericht</a>  
+                		</div>
+                	</div>
+                	<div class="dropdown">
+                		<button class="dropbtn">
+                			HSC <i class="fa fa-caret-down"><!-- HSC --></i>
+                		</button>
+                		<div class="dropdown-content">
+                			<a href="/vorhaben">»&nbsp;Vorhaben</a> 
+                			<a href="/team">»&nbsp;Team</a>
+                			<a href="/publikationen">»&nbsp;Publikationen</a>
+                			<a href="/news">»&nbsp;Neuigkeiten</a> 
+                		</div>
+                	</div>
+                	<form method="post" accept-charset="utf-8" action="/search/search"><div style="display:none;"><input type="hidden" name="_csrfToken" autocomplete="off" value="KEOIw5BXEyEWWkFAX6DUQzlQ4EwfmG1TsLWgMsLqpvDmjDZVOzCGFGmaSnhZW4axqP8xGb60fFZQs4qGAIFwsjrD0+u5UrT7X2DTL3qvXWuAjcJUptuUxoS4BTBeBbEmC65zHGppt4adyVQh3I0YYA=="></div>                    	<div id="nav_search">
+                    		<a href="/search">Suche</a>
+                    		<input id="nav_search_input" name="nav_search_input" type="text" class="hidden" />
+                    		<input type="hidden" name="options" checked="checked" value="1">                    		<input id="nav_search_submit" type="image" src="/img/silk/magnifier.png" alt="Suche" style="height:14px" />
+                    	</div>
+                	</form>                	            		<script type="text/javascript">
+            			function timedFadeout(){
+            				$("#nav_search_input").animate({width:'1px'},'fast','swing',function(){$("#nav_search_input").hide()})
+            			}
+            			var timeoutID;
+                		jQuery(document).ready(function() {
+                			$('#nav_search_input').width('1px');
+                			$("#nav_search").mouseenter(function() {
+                				clearTimeout(timeoutID);
+								$('#nav_search_input').animate({width:'10em'},'fast','swing',function(){$('#nav_search_input').focus()});
+            				});
+                			$("#nav_search_input").blur(function() {
+                    			clearTimeout(timeoutID);
+                				timeoutID = setTimeout(timedFadeout,2000);
+            				});
+                        });
+            		</script>
+            		                    <span id="social">
+                    	<a href="https://maniculae.de" style="margin-right:.5em">
+                    		<img src="/img/maniculae.png" alt="Maniculae" title="Maniculae">
+                    	</a>
+                    </span>
+                </div>
+            </div>
+                    	                <div class="content">
+                						<h2 class="with_top with_sub">
+					Wolfram von Eschenbach: 'Parzival'<a href="https://portal.dnb.de/opac.htm?query=nid%3D4108542-5&amp;method=simpleSearch&amp;cqlMode=true" target="_blank" class="icon icon_gnd_work toolTip" style="margin-left:10px" title="Informationen zum Werk in der GND anzeigen"><!-- GND --></a><a href="https://lobid.org/gnd/4108542-5" target="_blank" class="icon icon_lobid toolTip" style="margin-left:10px" title="Informationen zum Werk bei Lobid anzeigen"><!-- Lobid --></a><a href="https://www.germanistik-im-netz.de/suchergebnisse/?q=4108542-5" target="_blank" class="icon icon_gin toolTip" style="margin-left:10px" title="Literatur zum Werk bei GiN anzeigen"><!-- GiN --></a>				    </h2>
+				    <p class="vlverweis">Vgl. Joachim Bumke, in: <sup>2</sup>VL 10 (1999), Sp. 1376-1418.</p><p class="jumpMenu"><a href="#hss">Überlieferung</a> | <a href="#editions">Ausgaben</a> | <a href="#cotransmission">Mitüberlieferung</a></p><h3 id="hss">Überlieferung</h3><p class="centered">■ = Codex | □ = Fragment | ○ = Sonstiges</p><ol class="signaturen"><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1037">Amberg, Provinzialbibl., 8° Ms. 1</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1037">Berlin, Staatsbibl., mgf 734 Nr. 8</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1037">Berlin, Staatsbibl., mgf 923 Nr. 40</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1037">Oberhollabrunn, Knabenseminar, ohne Sign.</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1051">Schloss Anholt, Fürstl. Salm-Salm'sches Archiv, Membra disiecta Nr. 3</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1051">Privatbesitz, Auktionshaus Venator &amp; Hanstein, Köln, Nr. 2008/104,511</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/21834">Arnhem, Openbare en Gelderse Wetenschappelijke Bibl., MS 78</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1050">Augsburg, Universitätsbibl., aus Cod. III.1.4° 8</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1001">Berlin, Staatsbibl., mgf 734 Nr. 1</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1002">Berlin, Staatsbibl., mgf 734 Nr. 2</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1002">Nürnberg, Germanisches Nationalmuseum, Bibliothek, Hs. 42520</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1002">Stuttgart, Landesbibl., Cod. poet. et phil. 4° 89</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1022">Berlin, Staatsbibl., mgf 734 Nr. 3</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1000">Berlin, Staatsbibl., mgf 734 Nr. 4</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1735">Berlin, Staatsbibl., mgf 734 Nr. 5</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1735">Ansbach, Staatl. Bibl., Ms. lat. 68, Vorderer und hinterer Spiegel</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1728">Berlin, Staatsbibl., mgf 734 Nr. 6</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1728">Münster, Diözesanbibl., Bestand Studien- und Zentralbibl. der Franziskaner, ohne Sign. (1)</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1710">Berlin, Staatsbibl., mgf 734 Nr. 7</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1039">Berlin, Staatsbibl., mgf 734 Nr. 9</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1715">Berlin, Staatsbibl., mgf 923 Nr. 37</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1715">Graz, Zentralbibl. der Wiener Franziskanerprovinz, A 1/26</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1715">München, Staatsbibl., Cgm 194/II</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1715">Schwaz, Konventarchiv des Franziskanerklosters, Lade O, Frag. germ. 2</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1726">Berlin, Staatsbibl., mgf 923 Nr. 38</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1031">Berlin, Staatsbibl., mgf 923 Nr. 39</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1725">Berlin, Staatsbibl., mgf 923 Nr. 41</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1725">München, Staatsbibl., Cgm 5249/3e</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1725">Nürnberg, Germanisches Nationalmuseum, Bibliothek, Hs. 17439</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1017">Berlin, Staatsbibl., mgf 1394</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/3959">Bern, Burgerbibl., Cod. AA 91</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1719">Borken (Westf.), Stadtarchiv, ohne Sign.</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1719">Münster, Landesmuseum für Kunst und Kulturgeschichte, Ms. 459</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1003">Breslau / Wrocław, Universitätsbibl., Cod. Mil. II 441</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1003">Naumburg, Domstiftsbibl., Fragm. 64</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1038">Colmar, Stadtbibl., Ms. 850/1 (Kat.-Nr. 529/1)</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1038">Solothurn, Staatsarchiv, Handschriftenfragmente R 1.4.234 (1)</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1714">Darmstadt, Universitäts- und Landesbibl., Hs. 3252</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1714">Nürnberg, Germanisches Nationalmuseum, Bibliothek, Hs. 42519</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/6801">Dresden, Landesbibl., Mscr. M 66</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1042">Eisleben, Bibl. der Andreaskirche, ohne Sign.</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1266">Erfurt, Bistumsarchiv, Deutsche Fragmente 2</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1266">Leipzig, Universitätsbibl., Deutsche Fragmente 28</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1033">Erlangen, Universitätsbibl., Ms. B 1</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1727">Freiburg i. Br., Universitätsbibl., Hs. 530</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1046">Freiburg i. Br., Universitätsbibl., Hs. 678</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1708">Gotha, Forschungsbibl. der Universität Erfurt, Cod. Memb. I 130</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1708">Gotha, Forschungsbibl. der Universität Erfurt, Cod. Memb. I 133</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1708">Sondershausen, Schlossmuseum, Germ. lit. 2 (olim Hs.-Br. 3)</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1708">Weimar, Hauptstaatsarchiv, Handschriftenfragmente und Inkunabeln Nr. 10</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1012">Gotha, Forschungsbibl. der Universität Erfurt, Cod. Memb. II 218</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1012">Kassel, Universitätsbibl. / LMB, 8° Ms. poet. et roman. 11</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1707">Göttingen, Staats- und Universitätsbibl., 4° Cod. Ms. philol. 184:Ia</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1717">Göttingen, Staats- und Universitätsbibl., 4° Cod. Ms. philol. 184:Ib</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1019">Göttingen, Staats- und Universitätsbibl., Cod. Ms. W. Müller I,2</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1013">Graz, Landesarchiv, Fragm. Germ. 1</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/4853">Hamburg, Staats- und Universitätsbibl., Cod. germ. 6</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1049">Hannover, Hauptstaatsarchiv, Best. Hann. 75 Nr. 1862</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/4916">Heidelberg, Universitätsbibl., Cpg 339</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/2678">Heidelberg, Universitätsbibl., Cpg 364</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1722">Heidelberg, Universitätsbibl., Heid. Hs. 3650</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/5015">Karlsruhe, Landesbibl., Cod. Donaueschingen 70</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/5020">Karlsruhe, Landesbibl., Cod. Donaueschingen 97</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1711">Kassel, Universitätsbibl. / LMB, 2° Ms. poet. et roman. 30<sub>[7</sub></a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1724">Leeuwarden, Tresoar (Fries Historisch en Letterkundig Centrum), ms. 150 HS ltr. F (früher Hs. 150 Nr. 1)</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1025">Linz, Landesbibl., Hs. 1130</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1029">Liverpool, University Libr. (Sydney Jones Libr.), MS M 8951</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1047">Ljubljana / Laibach, National- und Universitätsbibl., Ms. 1553 (früher Nr. 99/50)</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/26074">Mainz, Stadtbibl., Hs. I 593, Leimabklatsch auf dem ehem. (!) Einbanddeckel</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1032">Marburg, Staatsarchiv, Best. 147 Hr 1 Nr. 16</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1048">Mengeringhausen (Waldeck), Stadtarchiv, ohne Sign.</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/1133">München, Staatsbibl., Cgm 18</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/1223">München, Staatsbibl., Cgm 19</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/1057">München, Staatsbibl., Cgm 61</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1709">München, Staatsbibl., Cgm 194/I</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1036">München, Staatsbibl., Cgm 194/III</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1045">München, Staatsbibl., Cgm 194/IV</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1045">München, Staatsbibl., Cgm 5249/3a</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1021">München, Staatsbibl., Cgm 5249/3b</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1009">München, Staatsbibl., Cgm 5249/3c</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1010">München, Staatsbibl., Cgm 5249/3d</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1020">München, Staatsbibl., Cgm 9342</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1018">München, Universitätsbibl., 8° Cod. ms. 154 (Cim. 80b), Fragm. I</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1040">Nürnberg, Germanisches Nationalmuseum, Bibliothek, Hs. 24137</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1713">Nürnberg, Germanisches Nationalmuseum, Bibliothek, Hs. 120937</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1721">Prag, Nationalbibl., Cod. XXIV.C.3</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/23275">Prag, Nationalmuseum, Sammlung Adolf Patera: 1 H a 144</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1027">Rein (Steiermark), Stiftsbibl., aus Cod. 205</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/5612">Rom, Bibl. Casanatense, Ms. 1409 (olim A I 19)</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1044">Salzburg, Salzburg Museum, Hs. 2479</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/1211">St. Gallen, Stiftsbibl., Cod. 857</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1211">Berlin, Staatsbibl., mgf 1021</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1211">Karlsruhe, Landesbibl., Cod. K 2037</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/5778">Schwerin, Landesbibl., ohne Sign.</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/15072">Solothurn, Staatsarchiv, Handschriftenfragmente R 1.4.234 (2)</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1058">Stuttgart, Stadtarchiv, ohne Sign.</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1028">Trier, Stadtbibl., Mappe X, Fragm. 11</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1718">Tübingen, Wilhelmsstift, Cod. Gb 676</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1041">Wasserburg (Inn), Stadtarchiv, ohne Sign. (3)</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1024">Weimar, Herzogin Anna Amalia Bibl., Cod. Fol. 439a (12)</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1723">Wien, Institut für Österr. Geschichtsforschung, Fragm. Nr. 65</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/1217">Wien, Österr. Nationalbibl., Cod. 2708</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/2995">Wien, Österr. Nationalbibl., Cod. 2775</a></li><li><a href="/abkverz" class="art toolTip" title="Codex">■</a> <a href="/6546">Wien, Österr. Nationalbibl., Cod. 2914</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1011">Wien, Österr. Nationalbibl., Cod. 12780</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1011">Dortmund, Stadt- und Landesbibl., Hds. 168</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1026">Wien, Österr. Nationalbibl., Cod. 13070</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1023">Wien, Österr. Nationalbibl., Cod. Ser. nova 2698</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1712">Wolfenbüttel, Herzog August Bibl., Cod. 404.9 (23) Novi</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1035">Würzburg, Staatsarchiv, ohne Sign.</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1220">Zürich, Staatsarchiv, C VI 1, VI, Nr. 6a</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1220">Zürich, Staatsarchiv, C VI 1, VI, Nr. 6b</a><br/><span class="art"><!-- empty --></span>+&nbsp;<a href="/1220">Zürich, Zentralbibl., Ms. Car. C 182</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1034">Zürich, Zentralbibl., Ms. Z XIV 13</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1720">Privatbesitz, Lord Ashburnham (Barrois-Hss.), London</a></li><li><a href="/abkverz" class="art toolTip" title="Fragment">□</a> <a href="/1030">Privatsammlung, Eis, Heidelberg, Hs. 100</a></li></ol><p class="box info_box">Weitere handschriftliche Textzeugen sind bisher nicht bekannt.</p><p>Anmerkung: Nicht verzeichnet ist die Inkunabel Johann Mentelin, Straßburg 1477 (W [G<sup>φ</sup>]); siehe <a href="http://gesamtkatalogderwiegendrucke.de/docs/M51783.htm">Gesamtkatalog der Wiegendrucke</a>.</p><h3 id="editions">Ausgaben</h3><p class="centered">(Hinweis)</p><ul class="literatur"><li><strong>Karl Lachmann </strong>(Hg.), Wolfram von Eschenbach, 2. Aufl., Berlin 1854. [<a href="http://books.google.de/books?id=U6s7AAAAcAAJ&amp;amp;dq=wolfram+eschenbach+1854&amp;amp;source=gbs_navlinks_s" target="_blank">online</a>]</li><li><strong>Wolfram von Eschenbach,</strong> Parzival. Nach der Ausgabe Karl Lachmanns, revidiert und kommentiert von Eberhard Nellmann. Übertragen von Dieter Kühn, 2 Bde. (Bibliothek des Mittelalters 8, Bibliothek deutscher Klassiker 110), Frankfurt a.M. 1994.</li><li><strong>Wolfram von Eschenbach,</strong> Parzival. Studienausgabe. Mhd. Text nach der sechsten Ausgabe von Karl Lachmann. Übersetzung von Peter Knecht. Mit Einführungen zum Text der Lachmannschen Ausgabe und in Probleme der 'Parzival'-Interpretation von Bernd Schirok, 2. Auflage, Berlin/New York 2003.</li><li><strong>Joachim Bumke </strong>(Hg.), Wolfram von Eschenbach, Parzival. Auf der Grundlage der Handschrift D (Altdeutsche Textbibliothek 119), Tübingen 2008.</li><li><strong>Hermann Reichert </strong>(Hg.), Wolfram von Eschenbach, Parzival. Nach der Handschrift D als "Leithandschrift", Band 1: Text, Wien 2019 (nach St. Gallen, Stiftsbibl., Cod. 857).</li><li><strong>Wolfram von Eschenbach</strong>, Parzival. Digitale Edition, Parzival-Projekt. [<a href="https://www.parzival.unibe.ch/parzdb/index.php" target="_blank">online</a>]</li><li>Siehe auch <strong><a href="http://editionsbericht.de/?n=E_Stolz2">Editionsbericht</a></strong></li></ul><h3 id="cotransmission">Mitüberlieferung<a href="#top" class="fright icon icon_top toolTip" title="nach oben">&nbsp;</a></h3><p class="jumpMenu"><span id="toggleJumpAlphabetic">Alphabetisch</span> | <span id="toggleJumpNumbers">Häufigkeit</span></p><p>Mit diesem Werk sind mindestens 28 weitere deutschsprachige Werke überliefert.</p><div class="cotransmission_alphabetic"><a href="/werke/437/mitueberlieferung/102" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Die ertrunkene Seele'</a> | <a href="/werke/437/mitueberlieferung/115" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Freidank: Sprüche</a> | <a href="/werke/437/mitueberlieferung/117" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Friedrich von Sonnenburg: Sangspruchstrophen</a> | <a href="/werke/437/mitueberlieferung/2131" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">Gottfried von Neifen: Lyrik</a> | <a href="/werke/437/mitueberlieferung/135" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Gottfried von Straßburg: 'Tristan'</a> | <a href="/werke/437/mitueberlieferung/195" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Klage'</a> | <a href="/werke/437/mitueberlieferung/4144" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'König Artus' Horn' I</a> | <a href="/werke/437/mitueberlieferung/589" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Der König im Bad' (Reimpaardichtung)</a> | <a href="/werke/437/mitueberlieferung/205" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Konrad von Fußesbrunnen: 'Kindheit Jesu'</a> | <a href="/werke/437/mitueberlieferung/206" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Konrad von Heimesfurt: 'Unser vrouwen hinvart'</a> | <a href="/werke/437/mitueberlieferung/2076" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Lieder</a> | <a href="/werke/437/mitueberlieferung/232" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Lohengrin'</a> | <a href="/werke/437/mitueberlieferung/4318" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Luneten Mantel'</a> | <a href="/werke/437/mitueberlieferung/267" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Der nackte Bote'</a> | <a href="/werke/437/mitueberlieferung/271" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Nibelungenlied'</a> | <a href="/werke/437/mitueberlieferung/1336" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">'Rappoltsteiner Parzifal'</a> | <a href="/werke/437/mitueberlieferung/311" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">Reinmar der Alte: Lyrik</a> | <a href="/werke/437/mitueberlieferung/2130" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">Reinmar von Brennenberg: Lyrik</a> | <a href="/werke/437/mitueberlieferung/317" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Ritter Poppe und Graf Wernart von Lewenperch'</a> | <a href="/werke/437/mitueberlieferung/353" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Segremors'</a> | <a href="/werke/437/mitueberlieferung/366" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Stricker: 'Karl der Große'</a> | <a href="/werke/437/mitueberlieferung/6140" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Sultansbriefe / Einladungsschreiben des Sultans von Babylon</a> | <a href="/werke/437/mitueberlieferung/587" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">Walther von Mezze: Lyrik</a> | <a href="/werke/437/mitueberlieferung/414" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">Walther von der Vogelweide: Lyrik</a> | <a href="/werke/437/mitueberlieferung/432" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">Wirnt von Grafenberg: 'Wigalois'</a> | <a href="/werke/437/mitueberlieferung/438" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Wolfram von Eschenbach: Lieder</a> | <a href="/werke/437/mitueberlieferung/439" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Wolfram von Eschenbach: 'Titurel'</a> | <a href="/werke/437/mitueberlieferung/440" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Wolfram von Eschenbach: 'Willehalm'</a></div><div class="cotransmission_numbers hidden"><a href="/werke/437/mitueberlieferung/2131" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">Gottfried von Neifen: Lyrik</a> | <a href="/werke/437/mitueberlieferung/1336" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">'Rappoltsteiner Parzifal'</a> | <a href="/werke/437/mitueberlieferung/311" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">Reinmar der Alte: Lyrik</a> | <a href="/werke/437/mitueberlieferung/2130" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">Reinmar von Brennenberg: Lyrik</a> | <a href="/werke/437/mitueberlieferung/587" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">Walther von Mezze: Lyrik</a> | <a href="/werke/437/mitueberlieferung/414" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">Walther von der Vogelweide: Lyrik</a> | <a href="/werke/437/mitueberlieferung/432" class="toolTip" style="font-size: 22px" title="Dieses Werk ist 2mal mitüberliefert">Wirnt von Grafenberg: 'Wigalois'</a> | <a href="/werke/437/mitueberlieferung/102" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Die ertrunkene Seele'</a> | <a href="/werke/437/mitueberlieferung/115" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Freidank: Sprüche</a> | <a href="/werke/437/mitueberlieferung/117" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Friedrich von Sonnenburg: Sangspruchstrophen</a> | <a href="/werke/437/mitueberlieferung/135" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Gottfried von Straßburg: 'Tristan'</a> | <a href="/werke/437/mitueberlieferung/195" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Klage'</a> | <a href="/werke/437/mitueberlieferung/4144" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'König Artus' Horn' I</a> | <a href="/werke/437/mitueberlieferung/589" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Der König im Bad' (Reimpaardichtung)</a> | <a href="/werke/437/mitueberlieferung/205" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Konrad von Fußesbrunnen: 'Kindheit Jesu'</a> | <a href="/werke/437/mitueberlieferung/206" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Konrad von Heimesfurt: 'Unser vrouwen hinvart'</a> | <a href="/werke/437/mitueberlieferung/2076" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Lieder</a> | <a href="/werke/437/mitueberlieferung/232" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Lohengrin'</a> | <a href="/werke/437/mitueberlieferung/4318" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Luneten Mantel'</a> | <a href="/werke/437/mitueberlieferung/267" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Der nackte Bote'</a> | <a href="/werke/437/mitueberlieferung/271" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Nibelungenlied'</a> | <a href="/werke/437/mitueberlieferung/317" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Ritter Poppe und Graf Wernart von Lewenperch'</a> | <a href="/werke/437/mitueberlieferung/353" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">'Segremors'</a> | <a href="/werke/437/mitueberlieferung/366" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Stricker: 'Karl der Große'</a> | <a href="/werke/437/mitueberlieferung/6140" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Sultansbriefe / Einladungsschreiben des Sultans von Babylon</a> | <a href="/werke/437/mitueberlieferung/438" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Wolfram von Eschenbach: Lieder</a> | <a href="/werke/437/mitueberlieferung/439" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Wolfram von Eschenbach: 'Titurel'</a> | <a href="/werke/437/mitueberlieferung/440" class="toolTip" style="font-size: 11px" title="Dieses Werk ist einmal mitüberliefert">Wolfram von Eschenbach: 'Willehalm'</a></div><script type="text/javascript">
+$(document).ready(function() {
+	$('.cotransmission_toggle').click(function(event) {
+		event.preventDefault();
+		if($(this).parent().find('.cotransmission_toggle_container').is(":hidden")){
+			$(this).parent().find('.cotransmission_toggle_container').css('display','inline');
+			$(this).parent().find('.icon_cotransmission_toggle_show').hide();
+			$(this).parent().find('.icon_cotransmission_toggle_hide').show();
+		}else{
+			$(this).parent().find('.cotransmission_toggle_container').hide();
+			$(this).parent().find('.icon_cotransmission_toggle_show').show();
+			$(this).parent().find('.icon_cotransmission_toggle_hide').hide();
+		}
+	});
+	$('#toggleJumpAlphabetic').click(function(event) {
+		$('.cotransmission_alphabetic').show();
+		$('.cotransmission_numbers').hide();
+		$(this).css('cursor','auto').css('color','#000');
+		$('#toggleJumpNumbers').css('cursor','pointer').css('color','#00f');
+	});
+	$('#toggleJumpNumbers').click(function(event) {
+		$('.cotransmission_alphabetic').hide();
+		$('.cotransmission_numbers').show();
+		$(this).css('cursor','auto').css('color','#000');
+		$('#toggleJumpAlphabetic').css('cursor','pointer').css('color','#00f');
+	});
+	$('#toggleJumpAlphabetic').click();
+});
+</script><p>In mindestens einer Handschrift des Werks "Wolfram von Eschenbach: 'Parzival'" befindet sich auch lateinischer Text.</p>					<div class="clear"><!-- clear --></div>
+                	                	<div id="tabPermalink" class="tab" style="top:0">
+            			<a href="/werke/437" id="permalinkURL" class="icon icon_permalink toolTip" title="Permalink: https://handschriftencensus.de/werke/437" data-clipboard-text="https://handschriftencensus.de/werke/437"><!-- permalink --></a>
+						<div class="tabShadow"><!-- tabShadow --></div>
+					</div>
+					<div id="tabExport" class="tab" style="top:50px">
+            			<a href="/werke/437.json" class="icon icon_export_json toolTip" title="Diesen Datensatz als JSON exportieren"><!-- export json --></a>
+						<div class="tabShadow"><!-- tabShadow --></div>
+					</div>
+            		        		</div>
+        		<div id="footer">
+	<div id="license" style="text-align:left">
+		<a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank" class="fleft">
+			<img alt="Creative Commons License" style="border-width:0" src="https://licensebuttons.net/l/by-sa/4.0/80x15.png">
+		</a>
+	</div>
+	<span id="footline">Handschriftencensus 2025	|	<a href="/impressum">Impressum</a> | <a href="/datenschutz">Datenschutzerklärung</a></span>
+	<span class="clear"><!-- clear --></span>
+		<!-- Matomo -->
+	<script type="text/javascript">var isAdBlockActive=true;</script>
+	<script type="text/javascript" src="/js/matomo.js"></script>
+    <script type="text/javascript">
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//webstats.handschriftencensus.de/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+    optedOut = false;
+    _paq.push([function () {
+        if(this.isUserOptedOut()){
+    		optedOut = true;
+        }
+    }]);
+    if (isAdBlockActive && !optedOut) {
+		$('#footer').append('<img src="https://webstats.handschriftencensus.de/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />');
+	}
+    </script>
+    <noscript>
+    <!-- Matomo Image Tracker-->
+    <img src="https://webstats.handschriftencensus.de/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+    <!-- End Matomo -->
+    </noscript>
+    <!-- End Matomo Code -->
+    </div>        	</div>
+    	</main>
+    </body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+                Handschriftencensus | 
+                'ABC zum Lob Christi'        </title>
+        
+		<link href="/favicon.ico" type="image/x-icon" rel="icon"><link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"><link rel="stylesheet" type="text/css" href="/css/cookieconsent.min.css" />
+<script type="text/javascript" src="/js/cookieconsent.min.js"></script>
+<script type="text/javascript">
+window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#252e39"
+        },
+        "button": {
+          "background": "#d5d5ff"
+        }
+      },
+      "cookie": {
+        "domain": "handschriftencensus.de",
+        "expiryDays": "7"
+      },
+      "type": "info",
+      onStatusChange: function(status) {
+        if(this.hasConsented()){
+        	$.getScript( "/js/matomo.js", function( data, textStatus, jqxhr ) {
+        		$.getScript( "/js/statistic.js", function( data, textStatus, jqxhr ) {
+                    console.log( "Cookie allowed. Thank you! :)" );
+        		});
+    		});
+        }
+	  },
+      "content": {
+    	  "message": "Der Handschriftencensus verwendet ein anonymes Statistik-Cookie, um die Nutzung der Online-Präsenz auswerten zu können. Mehr dazu in der ",
+          "dismiss": "Okay",
+          "link": "Datenschutzerklärung",
+        "href": "/privacy"
+      }
+    })
+});
+</script>
+
+<script src="/cache/js/jquery-default.js"></script><link rel="stylesheet" href="/cache/css/css-default.css">
+		<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var clipboard = new ClipboardJS('#permalinkURL');
+	clipboard.on('success', function(e) {
+		$('#permalinkURL').trigger('mouseleave');
+		$('#permalinkURL').attr('title',"Permalink kopiert!");
+		$('#permalinkURL').trigger('mouseover');
+	    e.clearSelection();
+	});
+	$('#permalinkURL').attr('title',"Permalink in die Zwischenablage kopieren");
+	$('#permalinkURL').click(function(event) {
+		event.preventDefault();
+	});
+	$('#permalinkURL').mouseleave(function(event) {
+		$(this).attr('title',"Permalink in die Zwischenablage kopieren");
+	});
+});
+</script>    </head>
+    <body>
+    		<header>
+        <div class="container text-center clearfix">
+            <h1><a href="/">Handschriften&shy;census</a></h1>
+    		<a id="logo_mainz" href="https://adwmainz.de" target="_blank">
+    			<img src="/img/adwm_big.png" alt="Akademie der Wissenschaften und der Literatur Mainz" title="Akademie der Wissenschaften und der Literatur Mainz"/>
+			</a>
+    		<a id="logo_mr" href="https://uni-marburg.de" target="_blank">
+    			<img src="/img/umr_logo_sw_trans_1280.png" alt="Philipps-Universität Marburg" title="Philipps-Universität Marburg"/>
+			</a>
+            <h2 class="tagline"><a href="/">Eine Bestandsaufnahme der handschriftlichen Über&shy;lieferung deutschsprachiger Texte des Mittelalters</a></h2> 
+            <span id="localization">
+            	<a href="/language/de" title="deutsch">de</a>
+            	|
+            	<a href="/language/en" title="english">en</a>
+            </span>
+        </div>
+    </header>
+        <main class="main">
+    		<div class="container">
+            	<div class="navbar-container">
+                <div class="navbar">
+                	                	<div class="dropdown">
+                		<button class="dropbtn">
+                			Verzeichnisse <i class="fa fa-caret-down"><!-- Verzeichnisse --></i>
+                		</button>
+                		<div class="dropdown-content">
+                			<a href="/hss">»&nbsp;Aufbewahrungsorte</a> 
+                			<a href="/werke">»&nbsp;Werke</a>
+                			<a href="/personen">»&nbsp;Personen</a>
+                			<a href="/abbildungen">»&nbsp;Abbildungen</a>
+                		</div>
+                	</div>
+                	<div class="dropdown">
+                		<button class="dropbtn">
+                			Literatur <i class="fa fa-caret-down"><!-- Literatur --></i>
+                		</button>
+                		<div class="dropdown-content">
+                			<a href="/forschungsliteratur">»&nbsp;Forschungsliteratur</a> 
+                			<a href="/forschungsliteratur/neuerscheinungen">»&nbsp;Neuerscheinungen 2024/2025</a>
+                			<a href="/forschungsliteratur/kataloge">»&nbsp;Handschriftenkataloge</a>
+                			<a href="https://editionsbericht.de" target="_blank">»&nbsp;Editionsbericht</a>  
+                		</div>
+                	</div>
+                	<div class="dropdown">
+                		<button class="dropbtn">
+                			HSC <i class="fa fa-caret-down"><!-- HSC --></i>
+                		</button>
+                		<div class="dropdown-content">
+                			<a href="/vorhaben">»&nbsp;Vorhaben</a> 
+                			<a href="/team">»&nbsp;Team</a>
+                			<a href="/publikationen">»&nbsp;Publikationen</a>
+                			<a href="/news">»&nbsp;Neuigkeiten</a> 
+                		</div>
+                	</div>
+                	<form method="post" accept-charset="utf-8" action="/search/search"><div style="display:none;"><input type="hidden" name="_csrfToken" autocomplete="off" value="g4fbIBv+05Jto96Aoy+hGb8JKtYMZhYnJsKIDsD7E70934zIfoUNDdPufJh8qV1cBozLp9hmABJUv2L59J2w+w6DA/MYu6OE3msbtThQJ0RApO1r9sh1iQXu7vtJ4Whp4dtJrEmabD0x7a7G71I2Jw=="></div>                    	<div id="nav_search">
+                    		<a href="/search">Suche</a>
+                    		<input id="nav_search_input" name="nav_search_input" type="text" class="hidden" />
+                    		<input type="hidden" name="options" checked="checked" value="1">                    		<input id="nav_search_submit" type="image" src="/img/silk/magnifier.png" alt="Suche" style="height:14px" />
+                    	</div>
+                	</form>                	            		<script type="text/javascript">
+            			function timedFadeout(){
+            				$("#nav_search_input").animate({width:'1px'},'fast','swing',function(){$("#nav_search_input").hide()})
+            			}
+            			var timeoutID;
+                		jQuery(document).ready(function() {
+                			$('#nav_search_input').width('1px');
+                			$("#nav_search").mouseenter(function() {
+                				clearTimeout(timeoutID);
+								$('#nav_search_input').animate({width:'10em'},'fast','swing',function(){$('#nav_search_input').focus()});
+            				});
+                			$("#nav_search_input").blur(function() {
+                    			clearTimeout(timeoutID);
+                				timeoutID = setTimeout(timedFadeout,2000);
+            				});
+                        });
+            		</script>
+            		                    <span id="social">
+                    	<a href="https://maniculae.de" style="margin-right:.5em">
+                    		<img src="/img/maniculae.png" alt="Maniculae" title="Maniculae">
+                    	</a>
+                    </span>
+                </div>
+            </div>
+                    	                <div class="content">
+                						<h2 class="with_top with_sub">
+					'ABC zum Lob Christi'				    </h2>
+				    <p class="jumpMenu"><a href="#hss">Überlieferung</a></p><h3 id="hss">Verweis</h3><p class="verweis">Siehe <a href="/werke/5922">'Alphabetum divinum' (dt.)</a></p>                	                	                	<div id="tabPermalink" class="tab" style="top:0">
+            			<a href="/werke/2193" id="permalinkURL" class="icon icon_permalink toolTip" title="Permalink: https://handschriftencensus.de/werke/2193" data-clipboard-text="https://handschriftencensus.de/werke/2193"><!-- permalink --></a>
+						<div class="tabShadow"><!-- tabShadow --></div>
+					</div>
+					<div id="tabExport" class="tab" style="top:50px">
+            			<a href="/werke/2193.json" class="icon icon_export_json toolTip" title="Diesen Datensatz als JSON exportieren"><!-- export json --></a>
+						<div class="tabShadow"><!-- tabShadow --></div>
+					</div>
+            		        		</div>
+        		<div id="footer">
+	<div id="license" style="text-align:left">
+		<a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank" class="fleft">
+			<img alt="Creative Commons License" style="border-width:0" src="https://licensebuttons.net/l/by-sa/4.0/80x15.png">
+		</a>
+	</div>
+	<span id="footline">Handschriftencensus 2025	|	<a href="/impressum">Impressum</a> | <a href="/datenschutz">Datenschutzerklärung</a></span>
+	<span class="clear"><!-- clear --></span>
+		<!-- Matomo -->
+	<script type="text/javascript">var isAdBlockActive=true;</script>
+	<script type="text/javascript" src="/js/matomo.js"></script>
+    <script type="text/javascript">
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//webstats.handschriftencensus.de/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+    optedOut = false;
+    _paq.push([function () {
+        if(this.isUserOptedOut()){
+    		optedOut = true;
+        }
+    }]);
+    if (isAdBlockActive && !optedOut) {
+		$('#footer').append('<img src="https://webstats.handschriftencensus.de/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />');
+	}
+    </script>
+    <noscript>
+    <!-- Matomo Image Tracker-->
+    <img src="https://webstats.handschriftencensus.de/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+    <!-- End Matomo -->
+    </noscript>
+    <!-- End Matomo Code -->
+    </div>        	</div>
+    	</main>
+    </body>
+</html>
