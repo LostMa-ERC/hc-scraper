@@ -33,7 +33,6 @@ erDiagram
         INT work_id PK, FK
         INT unit_id PK, FK
         VARCHAR status
-        VARCHAR locus
         VARCHAR siglum
     }
 
