@@ -1,35 +1,35 @@
 import unittest
 import requests
 
-from src.models.work import PartialWork
-from src.main import scrape_work
+from src.models.work import WorkNotice
+from src.actions import scrape_one_work, list_work_notices
 from src.database import Database
 
 work_notices = [
-    PartialWork(
+    WorkNotice(
         id="2639",
         title="irrelevant",
         url="https://handschriftencensus.de/werke/2639",
     ),
-    PartialWork(
+    WorkNotice(
         id="2639",
         title="duplicate",
         url="https://handschriftencensus.de/werke/2639",
     ),
-    PartialWork(
+    WorkNotice(
         id="437",
         title="irrelevant",
         url="https://handschriftencensus.de/werke/437",
     ),
-    PartialWork(
+    WorkNotice(
         id="2193",
-        title="404 error",
+        title="irrelevant",
         url="https://handschriftencensus.de/werke/2193",
     ),
 ]
 
 
-class WorkTest(unittest.TestCase):
+class WorkMetadataTest(unittest.TestCase):
     def setUp(self):
         self.db = Database(":memory:")
 
@@ -37,12 +37,31 @@ class WorkTest(unittest.TestCase):
         with requests.session() as session:
             for work_notice in work_notices:
                 try:
-                    scrape_work(db=self.db, work_notice=work_notice, session=session)
+                    scrape_one_work(
+                        db=self.db, work_notice=work_notice, session=session
+                    )
                 except Exception as e:
                     print(work_notice)
                     raise e
         n_works = self.db.conn.table("Works").count("id").fetchone()[0]
-        self.assertEqual(n_works, 2)
+        self.assertEqual(n_works, 3)
+
+
+class WorkListTest(unittest.TestCase):
+    def test_all_works(self):
+        urls = ["https://handschriftencensus.de/werke"]
+        with requests.session() as session:
+            notices = list_work_notices(work_pages=urls, session=session)
+        self.assertGreater(len(notices), 500)
+        self.assertIsInstance(notices[0], WorkNotice)
+
+    def test_tagged_works(self):
+        urls = ["https://handschriftencensus.de/tag/Antiken-+und+Alexanderroman"]
+        with requests.session() as session:
+            notices = list_work_notices(work_pages=urls, session=session)
+        self.assertGreater(len(notices), 20)
+        self.assertLess(len(notices), 100)
+        self.assertIsInstance(notices[0], WorkNotice)
 
 
 if __name__ == "__main__":

@@ -1,18 +1,7 @@
 from bs4 import BeautifulSoup, Tag
-from src.models.work import PartialWork, WorkModel
+from src.models.work import WorkModel
+from src.models.witness import WitnessModel
 from typing import Generator
-
-
-class WorksPage:
-    def __init__(self, html: bytes):
-        self.soup = BeautifulSoup(html, features="html.parser")
-
-    def get_works(self):
-        for unordered_list in self.soup.find_all(
-            "ul", class_="werke quicksearch_container"
-        ):
-            for list_item in unordered_list.find_all("li"):
-                yield PartialWork.from_list_item(li=list_item)
 
 
 class WorkResultPage:
@@ -66,3 +55,19 @@ class WorkMetadata(WorkResultPage):
     def validate(self) -> WorkModel:
         data = {k: v for k, v in self.__dict__.items() if v is not None}
         return WorkModel.model_validate(data)
+
+
+class WitnessScraperOnWorksPage(WorkResultPage):
+    def __init__(self, work_id: int, html: bytes):
+        self.work_id = work_id
+        super().__init__(html)
+
+    def list_witnesses(self) -> list[WitnessModel]:
+        witnesses = []
+        for list_item in self.iter_witnesses():
+            unit_relative_path = list_item.find_all("a")[1].get("href")
+            unit_id = int(unit_relative_path.removeprefix("/"))
+            status = list_item.find("a").get("title").lower()
+            model = WitnessModel(work_id=self.work_id, unit_id=unit_id, status=status)
+            witnesses.append(model)
+        return witnesses

@@ -10,74 +10,97 @@ pip install .
 
 ## Methodology
 
-### Ontology
-
-> in progress
-
-|Entity|Description|Example|Identifier|Fields|
-|--|--|--|--|--|
-|Work|Creative work.|https://handschriftencensus.de/werke/437|work ID, i.e. `437`|`id`, `title`, `status`, `references`|
-|Witness|An item in the list of the work's transmission (_Überlieferung_).|`□ Amberg, Provinzialbibl., 8° Ms. 1` `+ Berlin, Staatsbibl., mgf 734 Nr. 8` `+ Berlin, Staatsbibl., mgf 923 Nr. 40` `+ Oberhollabrunn, Knabenseminar, ohne Sign.`|work ID + codicological unit ID, i.e. `(437, 1037)`|`work_id`, `unit_id`|
-|Codicological Unit|A codicological unit.|https://handschriftencensus.de/1037|codicological unit ID, i.e. `1037`|`id`, `writing_material`, `folio_dimensions`, `written_area`, `number_of_columns`, `number_of_lines`, `verse_layout`, `date_of_creation`, `scribal_dialect`|
-|Part|Locus of the witness in the the codicological unit.|`Wolfram von Eschenbach: 'Parzival' (Fragm. 24)`|TODO: CHECK _work ID + codicological unit ID, i.e. (`437`, `1037`)_|`work_id`, `unit_id`, `locus`|
-|Document|Library item (can be identical with codicological unit).|https://handschriftencensus.de/hss/Berlin#s89857|document ID, i.e. `89857`|`id`, `library_alias`, `shelfmark`, `type`, `number_of_folios`|
-|City|Location of the library.|https://handschriftencensus.de/hss/Berlin|name, i.e. `Berlin`|`id`,`name`, `references`|
-
 ### Data model
-
-> in progress
 
 ```mermaid
 ---
 title: Data Model
 ---
 erDiagram
-    Works ||--o{ Witnesses : manifests
-    Witnesses }|--|| CodicologicalUnits : contains
-    CodicologicalUnits }|--|{ Documents : in
-    Documents }|--|| Repository : in
+    direction LR
+    WORK ||--o{ WITNESS : manifests
+    WITNESS }|--|| CODICOLOGICALUNIT : in
+    CODICOLOGICALUNIT }|--|{ DOCUMENT : in
+
+    WORK{
+        INT id PK
+        TEXT title
+        STRING status
+        TEXT[] references
+    }
+
+    WITNESS {
+        INT work_id PK, FK
+        INT unit_id PK, FK
+        VARCHAR status
+        VARCHAR locus
+        VARCHAR siglum
+    }
+
+    CODICOLOGICALUNIT {
+        INT id PK
+        VARCHAR writing_material
+        VARCHAR folio_dimensions
+        VARCHAR written_area
+        VARCHAR number_of_columns
+        VARCHAR number_of_lines
+        TEXT special_features
+        VARCHAR verse_layout
+        TEXT date_of_creation
+        TEXT scribal_dialect
+        TEXT scriptorium_location
+    }
+
+    DOCUMENT {
+        VARCHAR id PK
+        INT unit_id FK
+        VARCHAR shelfmark
+        VARCHAR type
+        VARCHAR numbering
+        VARCHAR city
+        VARCHAR institution
+    }
 ```
 
-### Discoverability
+### _Lancelot_ example
 
-> in progress
+Key: `WP` = Page that describes the work; `CP` = Page that describes the manuscript / codicological unit.
 
-Q1: Get all documents that contain work A.
-```sql
-SELECT wk.title, d.*
-FROM Witnesses wt
-INNER JOIN Works wk
-    ON wt.work_id = wk.id
-LEFT JOIN CodicologicalUnits cu
-    ON wt.unit_id = cu.id
-LEFT JOIN Documents d
-    ON cu.doc_id = d.id
-```
+**WORK**
 
-## Collect Works
+||id (PK)|title|status|references|
+|--|--|--|--|--|
+||221|'Lancelot'|complete|[DNB](https://portal.dnb.de/opac.htm?query=nid%3D4074015-8&method=simpleSearch&cqlMode=true), [lobid](https://lobid.org/gnd/4074015-8), [g-in](https://www.germanistik-im-netz.de/suchergebnisse/?q=4074015-8)
+|_data source_|[`WP`](https://handschriftencensus.de/werke/221)|[`WP`](https://handschriftencensus.de/werke/221)|[`WP`](https://handschriftencensus.de/werke/221)|[`WP`](https://handschriftencensus.de/werke/221)|
+
+**WITNESS**
+
+||work_id (PK)|unit_id (PK)|status|siglum|
+|--|--|--|--|--|
+||221|4204|codex|p|
+|_data source_|[`WP`](https://handschriftencensus.de/werke/221)|[`WP`](https://handschriftencensus.de/werke/221)|[`WP`](https://handschriftencensus.de/werke/221)|[`CP`](https://handschriftencensus.de/4204)|
+
+**CODICOLOGICALUNIT**
+
+||id (PK)|writing_material|folio_dimensions|written_area|number_of_columns|number_of_lines|special_features|verse_layout|date_of_creation|scribal_dialect|scriptorium_location|
+|--|--|--|--|--|--|--|--|--|--|--|--|
+||4204|Papier|298 x 203 mm und 295 x 205 mm|245-250 x 145 mm|1|36-48|Namenseintrag ([b], Vorsatzblatt): Johan Doringk||2. Viertel 16. Jh. (Zimmermann S. 222, 223)|südrheinfrk. mit mittelfrk. Schreibeigentümlichkeiten (Zimmermann S. 222, 223)|
+|_data source_|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|
+
+**DOCUMENT**
+
+||id (PK)|unit_id|shelfmark|type|numbering|city|institution|
+|--|--|--|--|--|--|--|--|
+||s81107|4204|Cpg 91|Codex|321 Blätter|Heidelberg|Universitätsbibl.|
+||s115557|4204|Cpg 92|Codex|198 Blätter|Heidelberg|Universitätsbibl.|
+|_data source_|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|
+
+## Usage
+
+### Phase 1
+
+Collect works and their witnesses, and create records for all the linked codicological units that will be scraped in phase 2.
 
 ```
 python src/main.py works
-```
-
-### `Works` table
-
-```console
-┌───────┬──────────────────────┬─────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│  id   │        title         │   status    │                                                                   references                                                                   │
-│ int32 │       varchar        │   varchar   │                                                                   varchar[]                                                                    │
-├───────┼──────────────────────┼─────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│  2448 │ 'A solis ortus car…  │ surviving   │ []                                                                                                                                             │
-│  2449 │ 'Aachener Chronik'   │ surviving   │ [https://portal.dnb.de/opac.htm?query=nid%3D1267444606&method=simpleSearch&cqlMode=true, https://lobid.org/gnd/1267444606, https://www.germa…  │
-│   729 │ 'ABC vom Altarssak…  │ surviving   │ []
-```
-
-### Relational `Witnesses` table
-```console
-┌─────────┬─────────┐
-│ work_id │ unit_id │
-│  int32  │  int32  │
-├─────────┼─────────┤
-│     729 │    3516 │
-│     729 │    3517 │
 ```

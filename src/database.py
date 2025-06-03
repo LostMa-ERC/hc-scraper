@@ -25,9 +25,11 @@ class Database:
                     folio_dimensions VARCHAR,
                     written_area VARCHAR,
                     number_of_lines VARCHAR,
+                    special_features TEXT,
                     verse_layout VARCHAR,
-                    date_of_creation VARCHAR,
-                    scribal_dialect VARCHAR
+                    date_of_creation TEXT,
+                    scribal_dialect TEXT,
+                    scriptorium_location TEXT
                     )"""
         )
 
@@ -37,9 +39,25 @@ class Database:
                     Create table if not exists Witnesses (
                     work_id INT,
                     unit_id INT,
+                    status VARCHAR,
+                    siglum VARCHAR,
                     PRIMARY KEY (work_id, unit_id),
                     FOREIGN KEY (unit_id) REFERENCES CodicologicalUnits (id),
                     FOREIGN KEY (work_id) REFERENCES Works (id)
+                    )"""
+        )
+
+        # Create the Documents table
+        self.conn.execute(
+            """
+                    Create table if not exists Document (
+                    id VARCHAR PRIMARY KEY,
+                    unit_id INT,
+                    shelfmark VARCHAR,
+                    type VARCHAR,
+                    city VARCHAR,
+                    institution VARCHAR,
+                    FOREIGN KEY (unit_id) REFERENCES CodicologicalUnits (id)
                     )"""
         )
 
@@ -84,8 +102,12 @@ class Database:
         query = "insert into CodicologicalUnits (id) values (?)"
         self.conn.execute(query, parameters=[id])
 
-    def insert_witness(self, work_id: int, unit_id: int):
-        if not self.cod_unit_is_present(id=unit_id):
-            self.create_dummy_codicological_unit(id=unit_id)
-        query = "insert into Witnesses (work_id, unit_id) values (?, ?)"
-        self.conn.execute(query, parameters=(work_id, unit_id))
+    def insert_witness(self, data: dict):
+        data = {k: v for k, v in data.items() if v}
+        if not self.cod_unit_is_present(id=data["unit_id"]):
+            self.create_dummy_codicological_unit(id=data["unit_id"])
+        cols = ", ".join(data.keys())
+        params = list(data.values())
+        placeholders = ", ".join(["?" for _ in params])
+        query = f"insert into Witnesses ({cols}) values ({placeholders})"
+        self.conn.execute(query, parameters=params)

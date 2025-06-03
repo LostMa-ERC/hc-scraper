@@ -8,9 +8,8 @@ from rich.progress import (
     TimeElapsedColumn,
 )
 
-from src.scrapers.works import WorksPage, WorkMetadata, PartialWork
-from src.scrapers.witness import WitnessScraper
 from src.database import Database
+from src.actions import list_work_notices, scrape_one_work, TagPrompt
 
 DB_PATH = "hc.duckdb"
 
@@ -21,50 +20,31 @@ def cli():
 
 
 @cli.command("works")
-def works():
+@click.option("--tags", is_flag=True, default=False)
+def works(tags: bool):
     db = Database(db_path=DB_PATH)
-    with (
-        requests.session() as session,
-        Progress(
+    with requests.session() as session:
+        # Get the latest list of works from the HC website
+        if not tags:
+            urls = ["https://handschriftencensus.de/werke"]
+        else:
+            prompter = TagPrompt(session=session)
+            urls = prompter.choose_tags()
+        work_notices = list_work_notices(work_pages=urls, session=session)
+
+        with Progress(
             TextColumn("{task.description}"),
             BarColumn(),
             MofNCompleteColumn(),
             TimeElapsedColumn(),
-        ) as p,
-    ):
-        # Get the latest list of works from the HC website
-        resp = session.get("https://handschriftencensus.de/werke")
-        works_page_html = resp.content
-        works_page_scraper = WorksPage(html=works_page_html)
-        work_notices = [w for w in works_page_scraper.get_works()]
+        ) as p:
+            # Set up a progress bar to track the scraping of all the works
+            t = p.add_task("Scraping works...", total=len(work_notices))
 
-        # Set up a progress bar to track the scraping of all the works
-        t = p.add_task("Scraping works...", total=len(work_notices))
-
-        # Iterate through the scraped works' notices
-        for work_notice in work_notices:
-            scrape_work(db=db, work_notice=work_notice, session=session)
-            p.advance(t)
-
-
-def scrape_work(db: Database, work_notice: PartialWork, session: requests.Session):
-    # Only if the work is not yet in the database, scrape it
-    if db.work_is_present(id=work_notice.id) is False:
-        # Fetch the work's result page
-        resp = session.get(work_notice.url)
-        if resp.status_code == 404:
-            return
-        html = resp.content
-
-        # Model and insert the work metadata
-        work_model = WorkMetadata(id=work_notice.id, html=html).validate()
-        metadata = work_model.model_dump()
-        db.insert_work(data=metadata)
-
-        # Model and insert the witness metadata
-        for witness_doc in WitnessScraper(html=html).get_codicological_unit():
-            if db.witness_is_present(work_notice.id, witness_doc) is False:
-                db.insert_witness(work_id=work_notice.id, unit_id=witness_doc)
+            # Iterate through the scraped works' notices
+            for work_notice in work_notices:
+                scrape_one_work(db=db, work_notice=work_notice, session=session)
+                p.advance(t)
 
 
 if __name__ == "__main__":
