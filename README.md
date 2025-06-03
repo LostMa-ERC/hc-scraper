@@ -2,10 +2,25 @@
 
 ## Install
 
-Python 3.13
+1. Create and activate a virtual Python environment (version 3.13+).
+
+2. Install the project.
 
 ```
-pip install .
+pip install git@github.com:LostMa-ERC/hc-scraper.git
+```
+
+### Contributors' installation
+
+1. Create and activate a virtual Python environment (version 3.13+).
+
+2. Download the code with `git clone`.
+
+3. Install an editable (`-e`) version of the project, with its developer dependencies (`.[dev]`), and set-up `pre-commit`.
+
+```
+pip install -e .[dev]
+pre-commit install
 ```
 
 ## Methodology
