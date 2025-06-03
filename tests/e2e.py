@@ -1,9 +1,10 @@
 import unittest
+
 import requests
 
-from src.models.work import WorkNotice
-from src.actions import scrape_one_work, list_work_notices
+from src.actions import list_work_notices, scrape_one_work
 from src.database import Database
+from src.models.work import WorkNotice
 
 work_notices = [
     WorkNotice(
