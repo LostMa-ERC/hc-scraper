@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	    	        <meta charset="utf-8">        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+                Handschriftencensus | 
+                Discissus Heidelberg, Universitätsbibl., Cpg 91 usw.        </title>
+        
+		<link href="/favicon.ico" type="image/x-icon" rel="icon"><link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"><link rel="stylesheet" type="text/css" href="/css/cookieconsent.min.css" />
+<script type="text/javascript" src="/js/cookieconsent.min.js"></script>
+<script type="text/javascript">
+window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#252e39"
+        },
+        "button": {
+          "background": "#d5d5ff"
+        }
+      },
+      "cookie": {
+        "domain": "handschriftencensus.de",
+        "expiryDays": "7"
+      },
+      "type": "info",
+      onStatusChange: function(status) {
+        if(this.hasConsented()){
+        	$.getScript( "/js/matomo.js", function( data, textStatus, jqxhr ) {
+        		$.getScript( "/js/statistic.js", function( data, textStatus, jqxhr ) {
+                    console.log( "Cookie allowed. Thank you! :)" );
+        		});
+    		});
+        }
+	  },
+      "content": {
+    	  "message": "Der Handschriftencensus verwendet ein anonymes Statistik-Cookie, um die Nutzung der Online-Präsenz auswerten zu können. Mehr dazu in der ",
+          "dismiss": "Okay",
+          "link": "Datenschutzerklärung",
+        "href": "/privacy"
+      }
+    })
+});
+</script>
+
+<script src="/cache/js/jquery-default.js"></script><link rel="stylesheet" href="/cache/css/css-default.css">
+		<script type="text/javascript" src="/js/jquery.ajax.js"></script>		<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var clipboard = new ClipboardJS('#permalinkURL');
+	clipboard.on('success', function(e) {
+		$('#permalinkURL').trigger('mouseleave');
+		$('#permalinkURL').attr('title',"Permalink kopiert!");
+		$('#permalinkURL').trigger('mouseover');
+	    e.clearSelection();
+	});
+	$('#permalinkURL').attr('title',"Permalink in die Zwischenablage kopieren");
+	$('#permalinkURL').click(function(event) {
+		event.preventDefault();
+	});
+	$('#permalinkURL').mouseleave(function(event) {
+		$(this).attr('title',"Permalink in die Zwischenablage kopieren");
+	});
+});
+</script>		<script type="text/javascript" src="/js/jquery.jump_to_source.js"></script>		<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    </head>
+    <body>
+    		<header>
+        <div class="container text-center clearfix">
+            <h1><a href="/">Handschriften&shy;census</a></h1>
+    		<a id="logo_mainz" href="https://adwmainz.de" target="_blank">
+    			<img src="/img/adwm_big.png" alt="Akademie der Wissenschaften und der Literatur Mainz" title="Akademie der Wissenschaften und der Literatur Mainz"/>
+			</a>
+    		<a id="logo_mr" href="https://uni-marburg.de" target="_blank">
+    			<img src="/img/umr_logo_sw_trans_1280.png" alt="Philipps-Universität Marburg" title="Philipps-Universität Marburg"/>
+			</a>
+            <h2 class="tagline"><a href="/">Eine Bestandsaufnahme der handschriftlichen Über&shy;lieferung deutschsprachiger Texte des Mittelalters</a></h2> 
+            <span id="localization">
+            	<a href="/language/de" title="deutsch">de</a>
+            	|
+            	<a href="/language/en" title="english">en</a>
+            </span>
+        </div>
+    </header>
+        <main class="main">
+    		<div class="container">
+            	<div class="navbar-container">
+                <div class="navbar">
+                	                	<div class="dropdown">
+                		<button class="dropbtn">
+                			Verzeichnisse <i class="fa fa-caret-down"><!-- Verzeichnisse --></i>
+                		</button>
+                		<div class="dropdown-content">
+                			<a href="/hss">»&nbsp;Aufbewahrungsorte</a> 
+                			<a href="/werke">»&nbsp;Werke</a>
+                			<a href="/personen">»&nbsp;Personen</a>
+                			<a href="/abbildungen">»&nbsp;Abbildungen</a>
+                		</div>
+                	</div>
+                	<div class="dropdown">
+                		<button class="dropbtn">
+                			Literatur <i class="fa fa-caret-down"><!-- Literatur --></i>
+                		</button>
+                		<div class="dropdown-content">
+                			<a href="/forschungsliteratur">»&nbsp;Forschungsliteratur</a> 
+                			<a href="/forschungsliteratur/neuerscheinungen">»&nbsp;Neuerscheinungen 2024/2025</a>
+                			<a href="/forschungsliteratur/kataloge">»&nbsp;Handschriftenkataloge</a>
+                			<a href="https://editionsbericht.de" target="_blank">»&nbsp;Editionsbericht</a>  
+                		</div>
+                	</div>
+                	<div class="dropdown">
+                		<button class="dropbtn">
+                			HSC <i class="fa fa-caret-down"><!-- HSC --></i>
+                		</button>
+                		<div class="dropdown-content">
+                			<a href="/vorhaben">»&nbsp;Vorhaben</a> 
+                			<a href="/team">»&nbsp;Team</a>
+                			<a href="/publikationen">»&nbsp;Publikationen</a>
+                			<a href="/news">»&nbsp;Neuigkeiten</a> 
+                		</div>
+                	</div>
+                	<form method="post" accept-charset="utf-8" action="/search/search"><div style="display:none;"><input type="hidden" name="_csrfToken" autocomplete="off" value="GRQ/stU9H5dV3tdwa5FDCK57ocpS+/chsKTLpvhbtdalXx6NjBtSNPyTfgjQCk92tWqEHuGto3Pzrqo1nNd1RWeAezk7gclil0yU+mWZxkDUnP2Wz2qE5pJtKrvvLjcFxaNJPbU+LBXQW7Ev1cnFRA=="></div>                    	<div id="nav_search">
+                    		<a href="/search">Suche</a>
+                    		<input id="nav_search_input" name="nav_search_input" type="text" class="hidden" />
+                    		<input type="hidden" name="options" checked="checked" value="1">                    		<input id="nav_search_submit" type="image" src="/img/silk/magnifier.png" alt="Suche" style="height:14px" />
+                    	</div>
+                	</form>                	            		<script type="text/javascript">
+            			function timedFadeout(){
+            				$("#nav_search_input").animate({width:'1px'},'fast','swing',function(){$("#nav_search_input").hide()})
+            			}
+            			var timeoutID;
+                		jQuery(document).ready(function() {
+                			$('#nav_search_input').width('1px');
+                			$("#nav_search").mouseenter(function() {
+                				clearTimeout(timeoutID);
+								$('#nav_search_input').animate({width:'10em'},'fast','swing',function(){$('#nav_search_input').focus()});
+            				});
+                			$("#nav_search_input").blur(function() {
+                    			clearTimeout(timeoutID);
+                				timeoutID = setTimeout(timedFadeout,2000);
+            				});
+                        });
+            		</script>
+            		                    <span id="social">
+                    	<a href="https://maniculae.de" style="margin-right:.5em">
+                    		<img src="/img/maniculae.png" alt="Maniculae" title="Maniculae">
+                    	</a>
+                    </span>
+                </div>
+            </div>
+                    	                <div class="content">
+                	                	                	<h2>Handschriftenbeschreibung 4204</h2>
+                	<p class="jumpMenu">
+                		<a href="#cOrte">Aufbewahrungsorte</a> | <a href="#cInhalt">Inhalt</a> | <a href="#cKodikologie">Kodikologie</a> | <a href="#cLiteratur">Forschungsliteratur</a>                	</p>
+                	    				                	<h3 id="cOrte">Aufbewahrungsorte<a href="#top" class="fright icon icon_top toolTip" title="nach oben">&nbsp;</a></h3>    				<table id="places" class="beschreibung">
+            			<tbody>
+            				<tr>
+            					<th class="abk"><!-- abk --></th><th class="ort">Institution</th><th class="art">Art</th><th class="umf">Umfang</th>            				</tr>
+    					<tr id="81107"><th class="abk">[a]</th><td class="ort"><a href="/hss/Heidelberg">Heidelberg</a>, Universitätsbibl., <a href="/hss/Heidelberg#s81107">Cpg 91</a></td><td class="art">Codex</td><td class="umf">321 Blätter</td></tr><tr id="115557"><th class="abk">[b]</th><td class="ort"><a href="/hss/Heidelberg">Heidelberg</a>, Universitätsbibl., <a href="/hss/Heidelberg#s115557">Cpg 92</a></td><td class="art">Codex</td><td class="umf">198 Blätter</td></tr></tbody></table>    					    					<p><!-- empty --></p><h3 id="cInhalt">Inhalt<a href="#top" class="fright icon icon_top toolTip" title="nach oben">&nbsp;</a></h3><table class="beschreibung"><tr><td id="inhalt"><a class="aw" href="/werke/221">'Lancelot'</a> ('Lancelot-Gral-Prosaroman') (p)</td></tr></table>    					<h3 id="cKodikologie">Kodikologie<a href="#top" class="fright icon icon_top toolTip" title="nach oben">&nbsp;</a></h3><p><!-- empty --></p><table class="beschreibung"><tbody><tr><th class="fitwidth">Beschreibstoff</th><td>Papier</td></tr><tr><th class="fitwidth">Blattgröße</th><td>298 x 203 mm und 295 x 205 mm</td></tr><tr><th class="fitwidth">Schriftraum</th><td>245-250 x 145 mm</td></tr><tr><th class="fitwidth">Spaltenzahl</th><td>1</td></tr><tr><th class="fitwidth">Zeilenzahl</th><td>36-48</td></tr><tr><th class="fitwidth">Besonderheiten</th><td>Namenseintrag ([b], Vorsatzblatt): <em>Johan Doringk</em></td></tr><tr><th class="fitwidth">Entstehungszeit</th><td>2. Viertel 16. Jh. (Zimmermann S. 222, 223)</td></tr><tr><th class="fitwidth">Schreibsprache</th><td>südrheinfrk. mit mittelfrk. Schreibeigentümlichkeiten (Zimmermann S. 222, 223)</td></tr></tbody></table>                    	                    	<p><!-- empty --></p>
+    					<h3 id="cLiteratur">Forschungsliteratur<a href="#top" class="fright icon icon_top toolTip" title="nach oben">&nbsp;</a></h3>    					<table class="beschreibung">
+                			<tbody>
+                                <tr><th>Abbildungen</th><td><div id="imageLinksByTextwitnesses" ><table class="autoImages"><tbody><tr><td style="width:1em">[<span class="citationAnchor"><a href="#81107" class="jumpToSource toolTip" title="Heidelberg,&nbsp;Universitätsbibl.,&nbsp;Cpg 91">a</a></span>]&nbsp;</td><td>Farb-Abbildung des <a href="https://digi.ub.uni-heidelberg.de/cpg91" target="_blank" class="toolTip" title="Quelle: digi.ub.uni-heidelberg.de">Codex</a><span></span></td></tr><tr><td style="width:1em">[<span class="citationAnchor"><a href="#115557" class="jumpToSource toolTip" title="Heidelberg,&nbsp;Universitätsbibl.,&nbsp;Cpg 92">b</a></span>]&nbsp;</td><td>Farb-Abbildung des <a href="https://digi.ub.uni-heidelberg.de/cpg92" target="_blank" class="toolTip" title="Quelle: digi.ub.uni-heidelberg.de">Codex</a><span></span></td></tr></tbody></table></div></td></tr><tr><th>Literatur<br/><span style="font-weight:normal">(Hinweis)</span></th><td><ul class="literatur"><li id="id895617"><strong>Karl Bartsch</strong>, Die altdeutschen Handschriften der Universitäts-Bibliothek in Heidelberg (Katalog der Handschriften der Universitäts-Bibliothek in Heidelberg I), Heidelberg 1887, S. 23 (Nr. 55 + 56). [<a href="http://www.manuscripta-mediaevalia.de/hs/kataloge/HSK0031.htm" target="_blank" id="url95">MM online</a>] [<a href="http://nbn-resolving.de/urn:nbn:de:bsz:16-diglit-20419" target="_blank" id="url95">UB Heidelberg online</a>]</li><li id="id895618"><strong>Thordis Hennings</strong>, Altfranzösischer und mittelhochdeutscher Prosa-Lancelot. Übersetzungs- und quellenkritische Studien (Beiträge zur älteren Literaturgeschichte), Heidelberg 2001.</li><li id="id895619"><strong>Karin Zimmermann</strong> unter Mitwirkung von <strong>Sonja Glauch</strong>, <strong>Matthias Miller</strong> und <strong>Armin Schlechter</strong>, Die Codices Palatini germanici in der Universitätsbibliothek Heidelberg (Cod. Pal. germ. 1-181) (Kataloge der Universitätsbibliothek Heidelberg VI), Wiesbaden 2003, S. 222f. [<a href="http://nbn-resolving.de/urn:nbn:de:bsz:16-diglit-26679" target="_blank" id="url2629">online</a>]</li><li id="id895620"><strong>Katja Rothstein</strong>, Der mittelhochdeutsche Prosa-<em>Lancelot</em>. Eine entstehungs- und überlieferungsgeschichtliche Untersuchung unter besonderer Berücksichtigung der Handschrift Ms. allem. 8017-8020 (Kultur, Wissenschaft, Literatur 15), Frankfurt a.M. 2007, S. 36.</li><li id="id998625"><strong>Handschriftenportal (HSP)</strong> - Online-Portal für Buchhandschriften des Mittelalters in deutschen Sammlungen [<a href="https://handschriftenportal.de/" target="_blank" id="url21955">online</a>] [<a href="https://resolver.staatsbibliothek-berlin.de/HSP0004841700000000" target="_blank">Heidelberg, Universitätsbibl., Cpg 91</a>] [<a href="https://resolver.staatsbibliothek-berlin.de/HSP0004841800000000" target="_blank">Heidelberg, Universitätsbibl., Cpg 92</a>]</li></ul></td></tr><tr><th class="fitwidth">Archivbeschreibung</th><td>[a] <a href="https://handschriftenarchiv.bbaw.de/id/70035613">Günther Jungbluth (1938)</a><br />[b] <a href="https://handschriftenarchiv.bbaw.de/id/70035614">Günther Jungbluth (1938)</a></td></tr>                            </tbody>
+                        </table>
+                                        <table class="beschreibung">
+            			<tbody>
+                            <tr><th id="bearbeiter">Teresa Reinhild Küppers, Februar 2023</th></tr>                        </tbody>
+                    </table>
+                                        <div id="show_mitteilung_form"><p style="text-align:center"><a href="/4204/mitteilung#show_mitteilung_form" class="icon icon_comment_add">Mitteilung (Ergänzung/Korrektur)</a></p></div>
+            		<div id="tabPermalink" class="tab">
+            			<a href="/4204" id="permalinkURL" class="icon icon_permalink toolTip" title="Permalink: https://handschriftencensus.de/4204" data-clipboard-text="https://handschriftencensus.de/4204"><!--  permalink --></a>
+						<div class="tabShadow"><!-- tabShadow --></div>
+					</div>
+            		<div id="tabNote" class="tab">
+            			<a href="/4204/mitteilung#show_mitteilung_form" class="icon icon_comment_add toolTip" title="Mitteilung (Ergänzung/Korrektur)"><!-- note --></a>
+						<div class="tabShadow"><!-- tabShadow --></div>
+					</div>
+					<div id="tabExport" class="tab">
+            			<a href="/4204.json" class="icon icon_export_json toolTip" title="Diesen Datensatz als JSON exportieren"><!-- export json --></a>
+						<div class="tabShadow"><!-- tabShadow --></div>
+					</div>
+					<script type="text/javascript">
+					$(document).ready(function() {
+						if(Math.round(100/$('.content').width()*$('th.ort').width()) > 75 && ($('.content').width() > 300)){
+    							$('td.ort').each(function(index) {
+                                    if($('td.ort').width() < 690){
+    								$(this).width((Math.round($('.content').width()*75/100)));
+    								$(this).css('white-space','normal');
+                                    }
+    							});
+    						}if($('td.ort').width() >= 690){
+                                       $('td.ort').css('white-space','normal');
+                                       $('td.ort').css('width','45em');
+                                   }		            	$("#tabNote a, #show_mitteilung_form a, #noImages").click(function(event) {
+			            	url = $(this).attr('href');
+    						event.preventDefault();
+    						simpleAjaxCall(url,$('#show_mitteilung_form'),function(result){
+        						$('#show_mitteilung_form').hide();
+	                    		$('#show_mitteilung_form').html(result);
+	                    		$('#show_mitteilung_form').show();
+	                    		$('html, body').animate({scrollTop: $(document).height()}, 'slow');
+	                    	});
+		            	});
+		        	});
+					</script>
+                            		</div>
+        		<div id="footer">
+	<div id="license" style="text-align:left">
+		<a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank" class="fleft">
+			<img alt="Creative Commons License" style="border-width:0" src="https://licensebuttons.net/l/by-sa/4.0/80x15.png">
+		</a>
+	</div>
+	<span id="footline">Handschriftencensus 2025	|	<a href="/impressum">Impressum</a> | <a href="/datenschutz">Datenschutzerklärung</a></span>
+	<span class="clear"><!-- clear --></span>
+		<!-- Matomo -->
+	<script type="text/javascript">var isAdBlockActive=true;</script>
+	<script type="text/javascript" src="/js/matomo.js"></script>
+    <script type="text/javascript">
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//webstats.handschriftencensus.de/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+    optedOut = false;
+    _paq.push([function () {
+        if(this.isUserOptedOut()){
+    		optedOut = true;
+        }
+    }]);
+    if (isAdBlockActive && !optedOut) {
+		$('#footer').append('<img src="https://webstats.handschriftencensus.de/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />');
+	}
+    </script>
+    <noscript>
+    <!-- Matomo Image Tracker-->
+    <img src="https://webstats.handschriftencensus.de/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+    <!-- End Matomo -->
+    </noscript>
+    <!-- End Matomo Code -->
+    </div>        	</div>
+    	</main>
+    </body>
+</html>
