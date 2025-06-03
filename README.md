@@ -1,5 +1,11 @@
 # Scrape metadata from the Handschriftencensus
 
+## Table of contents
+
+- [Installation](#install)
+- [Methodology](#methodology)
+- [Usage](#usage)
+
 ## Install
 
 1. Create and activate a virtual Python environment (version 3.13+).
@@ -115,6 +121,54 @@ Key: `WP` = Page that describes the work; `CP` = Page that describes the manuscr
 
 Collect works and their witnesses, and create records for all the linked codicological units that will be scraped in phase 2.
 
+#### Option 1
+
+Collect all the works in the database.
+
 ```
-python src/main.py works
+$ python src/main.py works
+Scraping works... ━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  391/6805 0:00:49
+```
+
+#### Option 2
+
+Collect all the works with a certain tag.
+
+```console
+$ python src/main.py works -t "Artus-+und+Tristanroman"
+Scraping works... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━ 28/31 0:00:03
+```
+
+#### Option 3
+
+From a list of available tags, select which tags whose works you wish to collect.
+
+```console
+$ python src/main.py works --choose-tags
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Tag                              ┃ Selected ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ Antiken- und Alexanderroman (24) │ Yes      │
+│ Artus- und Tristanroman (31)     │ Yes      │
+│ Autorinnen/Schreiberinnen (268)  │ No       │
+│ Deutscher Orden (60)             │          │
+│ Druckabschriften (145)           │          │
+│ Fabel (88)                       │          │
+│ Frühmittelalter (169)            │          │
+│ Geistliches Spiel (118)          │          │
+│ Helden- und Dietrichepik (21)    │          │
+│ Karlsepik (26)                   │          │
+│ Marienklage (43)                 │          │
+│ Minne- und Abenteuerroman (12)   │          │
+│ Minnerede (304)                  │          │
+│ Minnesang (125)                  │          │
+│ Niederdeutsch (240)              │          │
+│ Novellistik (164)                │          │
+│ Palimpsest (12)                  │          │
+│ Sangsprüche (137)                │          │
+│ Vorhöfische Epik (11)            │          │
+│ Zauber und Segen (184)           │          │
+└──────────────────────────────────┴──────────┘
+Select the tag
+Deutscher Orden (60) [y/n]:
 ```

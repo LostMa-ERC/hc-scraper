@@ -20,16 +20,19 @@ def cli():
 
 
 @cli.command("works")
-@click.option("--tags", is_flag=True, default=False)
-def works(tags: bool):
+@click.option("--choose-tags", is_flag=True, default=False)
+@click.option("-t", "--tag")
+def works(choose_tags: bool, tag: str | None):
     db = Database(db_path=DB_PATH)
     with requests.session() as session:
         # Get the latest list of works from the HC website
-        if not tags:
-            urls = ["https://handschriftencensus.de/werke"]
-        else:
+        if choose_tags:
             prompter = TagPrompt(session=session)
             urls = prompter.choose_tags()
+        elif tag:
+            urls = [f"https://handschriftencensus.de/tag/{tag}"]
+        else:
+            urls = ["https://handschriftencensus.de/werke"]
         work_notices = list_work_notices(work_pages=urls, session=session)
 
         with Progress(

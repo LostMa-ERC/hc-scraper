@@ -24,6 +24,7 @@ class Database:
                     writing_material VARCHAR,
                     folio_dimensions VARCHAR,
                     written_area VARCHAR,
+                    number_of_columns VARCHAR,
                     number_of_lines VARCHAR,
                     special_features TEXT,
                     verse_layout VARCHAR,
