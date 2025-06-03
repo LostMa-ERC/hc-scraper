@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+
 from src.models.work import WorkNotice
 
 

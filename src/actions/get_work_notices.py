@@ -1,7 +1,8 @@
 import requests
-from src.scrapers.works_page import AllWorksPage
-from src.scrapers.tagged_works_page import TaggedWorksPage
+
 from src.models.work import WorkNotice
+from src.scrapers.tagged_works_page import TaggedWorksPage
+from src.scrapers.works_page import AllWorksPage
 
 
 def get_work_notices(

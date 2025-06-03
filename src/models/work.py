@@ -1,6 +1,6 @@
-from bs4 import Tag
 from dataclasses import dataclass
 
+from bs4 import Tag
 from pydantic import BaseModel, Field, field_validator
 
 TRADITION_STATUS = ["fragmentary", "lost", "surviving", "unknown"]

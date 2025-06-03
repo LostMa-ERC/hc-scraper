@@ -1,7 +1,9 @@
-from bs4 import BeautifulSoup, Tag
-from src.models.work import WorkModel
-from src.models.witness import WitnessModel
 from typing import Generator
+
+from bs4 import BeautifulSoup, Tag
+
+from src.models.witness import WitnessModel
+from src.models.work import WorkModel
 
 
 class WorkResultPage:

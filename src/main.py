@@ -1,15 +1,15 @@
-import requests
 import click
+import requests
 from rich.progress import (
-    Progress,
     BarColumn,
     MofNCompleteColumn,
+    Progress,
     TextColumn,
     TimeElapsedColumn,
 )
 
+from src.actions import TagPrompt, list_work_notices, scrape_one_work
 from src.database import Database
-from src.actions import list_work_notices, scrape_one_work, TagPrompt
 
 DB_PATH = "hc.duckdb"
 
