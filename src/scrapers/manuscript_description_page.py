@@ -3,7 +3,7 @@ import re
 from bs4 import BeautifulSoup, Tag
 from bs4.element import NavigableString
 
-from src.models.physdesc import PhysDescModel
+from src.models.description import DescriptionModel
 
 
 class ManuscriptDescriptionPage:
@@ -101,8 +101,8 @@ class PhysDescScraper(ManuscriptDescriptionPage):
         super().__init__(html)
         self.parse_codicology_table()
 
-    def validate(self) -> PhysDescModel:
-        return PhysDescModel.model_validate(self.__dict__)
+    def validate(self) -> DescriptionModel:
+        return DescriptionModel.model_validate(self.__dict__)
 
     def parse_codicology_table(self) -> None:
         for row in self.codicology:

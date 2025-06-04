@@ -17,10 +17,10 @@ class Database:
                     )"""
         )
 
-        # Create PhysDesc table
+        # Create ManuscriptDescription table
         self.conn.execute(
             """
-                    Create table if not exists PhysDesc (
+                    Create table if not exists ManuscriptDescription (
                     id INT PRIMARY KEY,
                     writing_material VARCHAR,
                     folio_dimensions VARCHAR,
@@ -45,7 +45,7 @@ class Database:
                     status VARCHAR,
                     siglum VARCHAR,
                     PRIMARY KEY (work_id, unit_id),
-                    FOREIGN KEY (unit_id) REFERENCES PhysDesc (id),
+                    FOREIGN KEY (unit_id) REFERENCES ManuscriptDescription (id),
                     FOREIGN KEY (work_id) REFERENCES Werke (id)
                     )"""
         )
@@ -60,7 +60,7 @@ class Database:
                     type VARCHAR,
                     city VARCHAR,
                     institution VARCHAR,
-                    FOREIGN KEY (unit_id) REFERENCES PhysDesc (id)
+                    FOREIGN KEY (unit_id) REFERENCES ManuscriptDescription (id)
                     )"""
         )
 
@@ -94,21 +94,21 @@ class Database:
             table="Witness", primary_key="(work_id, unit_id)", pk=(work_id, unit_id)
         )
 
-    def codicology_is_present(self, id: int) -> bool:
-        return self._is_present(table="PhysDesc", primary_key="id", pk=id)
+    def manuscript_description_is_present(self, id: int) -> bool:
+        return self._is_present(table="ManuscriptDescription", primary_key="id", pk=id)
 
-    def insert_work(self, data: dict):
+    def create_work(self, data: dict):
         query = "insert into Werke values ($id, $title, $status, $references)"
         self.conn.execute(query, parameters=data)
 
-    def create_dummy_codicology(self, id: int):
-        query = "insert into PhysDesc (id) values (?)"
+    def create_dummy_manuscript_description(self, id: int):
+        query = "insert into ManuscriptDescription (id) values (?)"
         self.conn.execute(query, parameters=[id])
 
-    def insert_witness(self, data: dict):
+    def create_witness(self, data: dict):
         data = {k: v for k, v in data.items() if v}
-        if not self.codicology_is_present(id=data["unit_id"]):
-            self.create_dummy_codicology(id=data["unit_id"])
+        if not self.manuscript_description_is_present(id=data["unit_id"]):
+            self.create_dummy_manuscript_description(id=data["unit_id"])
         cols = ", ".join(data.keys())
         params = list(data.values())
         placeholders = ", ".join(["?" for _ in params])

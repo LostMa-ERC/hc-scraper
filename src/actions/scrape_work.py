@@ -17,7 +17,7 @@ def scrape_work(db: Database, work_notice: WorkNotice, session: requests.Session
         # Model and insert the work metadata
         work_model = WorkMetadata(id=work_notice.id, html=html).validate()
         metadata = work_model.model_dump()
-        db.insert_work(data=metadata)
+        db.create_work(data=metadata)
 
         # Model and insert the witness metadata
         for witness in WitnessScraperOnWorksPage(
@@ -25,4 +25,4 @@ def scrape_work(db: Database, work_notice: WorkNotice, session: requests.Session
         ).list_witnesses():
             if db.witness_is_present(witness.work_id, witness.unit_id) is False:
                 metadata = witness.model_dump()
-                db.insert_witness(metadata)
+                db.create_witness(metadata)
