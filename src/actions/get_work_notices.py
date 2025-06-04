@@ -5,7 +5,7 @@ from src.scrapers.tagged_works_page import TaggedWorksPage
 from src.scrapers.works_page import AllWorksPage
 
 
-def get_work_notices(
+def list_work_notices(
     work_pages: list[str], session: requests.Session
 ) -> list[WorkNotice]:
     work_notices = []

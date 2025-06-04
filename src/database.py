@@ -7,9 +7,9 @@ class Database:
 
         # Create the Werke table
         # Name it Werke because 'Work' is a reserved keyword in SQL
-        self.conn.execute(
+        self.execute(
             """
-                    Create table if not exists Werke (
+                    CREATE TABLE IF NOT EXISTS Werke (
                     id INT PRIMARY KEY,
                     title TEXT,
                     status VARCHAR,
@@ -18,51 +18,56 @@ class Database:
         )
 
         # Create ManuscriptDescription table
-        self.conn.execute(
+        self.execute(
             """
-                    Create table if not exists ManuscriptDescription (
+                    CREATE TABLE IF NOT EXISTS ManuscriptDescription (
                     id INT PRIMARY KEY,
+                    scraped BOOL DEFAULT False,
                     writing_material VARCHAR,
-                    folio_dimensions VARCHAR,
-                    written_area VARCHAR,
-                    number_of_columns VARCHAR,
-                    number_of_lines VARCHAR,
-                    stanza_layout VARCHAR,
-                    verse_layout VARCHAR,
-                    special_features TEXT,
+                    folio_dimensions VARCHAR[],
+                    written_area VARCHAR[],
+                    number_of_columns VARCHAR[],
+                    number_of_lines VARCHAR[],
+                    stanza_layout VARCHAR[],
+                    verse_layout VARCHAR[],
+                    special_features TEXT[],
                     date_of_creation TEXT,
-                    scribal_dialect TEXT,
-                    scriptorium_location TEXT
+                    scribal_dialect TEXT[],
+                    scriptorium_location TEXT[]
                     )"""
         )
 
         # Create the relational Witness table
-        self.conn.execute(
+        self.execute(
             """
-                    Create table if not exists Witness (
+                    CREATE TABLE IF NOT EXISTS Witness (
                     work_id INT,
-                    unit_id INT,
+                    ms_id INT,
                     status VARCHAR,
                     siglum VARCHAR,
-                    PRIMARY KEY (work_id, unit_id),
-                    FOREIGN KEY (unit_id) REFERENCES ManuscriptDescription (id),
-                    FOREIGN KEY (work_id) REFERENCES Werke (id)
+                    PRIMARY KEY (work_id, ms_id)
                     )"""
         )
 
         # Create the Documents table
-        self.conn.execute(
+        self.execute(
             """
-                    Create table if not exists Document (
+                    CREATE TABLE IF NOT EXISTS Document (
                     id VARCHAR PRIMARY KEY,
-                    unit_id INT,
+                    ms_id INT,
                     shelfmark VARCHAR,
                     type VARCHAR,
                     city VARCHAR,
                     institution VARCHAR,
-                    FOREIGN KEY (unit_id) REFERENCES ManuscriptDescription (id)
                     )"""
         )
+
+    def execute(self, query: str, parameters=()) -> None:
+        try:
+            self.conn.execute(query, parameters=parameters)
+        except Exception as e:
+            print(query)
+            raise e
 
     def _is_present(self, table: str, primary_key: str, pk: int | tuple) -> bool:
         query = f"select count(*) from {table} where {primary_key} = ?"
@@ -86,12 +91,36 @@ class Database:
 {rows} rows with same value in '{primary_key}'."
             )
 
+    def count_all_manuscripts(self) -> int:
+        return self.conn.sql("SELECT COUNT(*) FROM ManuscriptDescription").fetchone()[0]
+
+    def count_completed_manuscripts(self) -> int:
+        # Complete = description was scraped
+        return self.conn.sql(
+            """SELECT COUNT(*)
+                FROM ManuscriptDescription
+                WHERE scraped"""
+        ).fetchone()[0]
+
+    def get_manuscripts_and_works(self) -> list[tuple]:
+        # Complete = description was scraped
+        sql = """
+        SELECT
+            m.id AS ms,
+            list(w.work_id) AS works
+        FROM ManuscriptDescription m
+        LEFT JOIN Witness w ON m.id = w.ms_id
+        WHERE NOT scraped
+        GROUP BY m.id
+        """
+        return self.conn.sql(sql).fetchall()
+
     def work_is_present(self, id: int) -> bool:
         return self._is_present(table="Werke", primary_key="id", pk=id)
 
-    def witness_is_present(self, work_id: int, unit_id: int) -> bool:
+    def witness_is_present(self, work_id: int, ms_id: int) -> bool:
         return self._is_present(
-            table="Witness", primary_key="(work_id, unit_id)", pk=(work_id, unit_id)
+            table="Witness", primary_key="(work_id, ms_id)", pk=(work_id, ms_id)
         )
 
     def manuscript_description_is_present(self, id: int) -> bool:
@@ -99,18 +128,26 @@ class Database:
 
     def create_work(self, data: dict):
         query = "insert into Werke values ($id, $title, $status, $references)"
-        self.conn.execute(query, parameters=data)
+        self.execute(query, parameters=data)
 
     def create_dummy_manuscript_description(self, id: int):
         query = "insert into ManuscriptDescription (id) values (?)"
-        self.conn.execute(query, parameters=[id])
+        self.execute(query, parameters=[id])
 
     def create_witness(self, data: dict):
         data = {k: v for k, v in data.items() if v}
-        if not self.manuscript_description_is_present(id=data["unit_id"]):
-            self.create_dummy_manuscript_description(id=data["unit_id"])
+        if not self.manuscript_description_is_present(id=data["ms_id"]):
+            self.create_dummy_manuscript_description(id=data["ms_id"])
         cols = ", ".join(data.keys())
         params = list(data.values())
         placeholders = ", ".join(["?" for _ in params])
         query = f"insert into Witness ({cols}) values ({placeholders})"
-        self.conn.execute(query, parameters=params)
+        self.execute(query, parameters=params)
+
+    def update_manuscript_description(self, data: dict):
+        data = {k: v for k, v in data.items() if v}
+        id = data.pop("id")
+        data.update({"scraped": True})
+        cols = ", ".join([f"{k} = ${k}" for k in data.keys()])
+        query = f"update ManuscriptDescription set {cols} where id = {id}"
+        self.execute(query, parameters=data)

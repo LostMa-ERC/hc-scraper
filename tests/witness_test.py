@@ -4,11 +4,11 @@ from pathlib import Path
 from src.scrapers.manuscript_description_page import WitnessScraper
 
 HTML_WITH_NUMBERING = (
-    Path(__file__).parent.joinpath("html").joinpath("manuscript_description_b.html")
+    Path(__file__).parent.joinpath("html").joinpath("manuscript_description_21835.html")
 )
 
 HTML_WITH_SIGLUM = (
-    Path(__file__).parent.joinpath("html").joinpath("manuscript_description_a.html")
+    Path(__file__).parent.joinpath("html").joinpath("manuscript_description_4204.html")
 )
 
 
@@ -46,6 +46,30 @@ class WitnessTest(unittest.TestCase):
         siglum = scraper.find_siglum(work_id=221)
         self.assertIsNone(numbering)
         self.assertEqual("(p)", siglum)
+
+
+class TempTest(unittest.TestCase):
+    def setUp(self):
+        with open(HTML_WITH_NUMBERING) as f:
+            self.html_with_numbering = f.read()
+        with open(HTML_WITH_SIGLUM) as f:
+            self.html_with_siglum = f.read()
+
+    def confirm_that_grouping_by_line_break_completed(self, contents):
+        groups = WitnessScraper.group_by_line_break(elements=contents)
+        last_element = [elem for elem in contents.children][-1]
+        last_group = groups[-1][-1]
+        self.assertEqual(last_element, last_group)
+
+    def test_content_list(self):
+        scraper = WitnessScraper(html=self.html_with_numbering)
+        contents = scraper.contents
+        self.confirm_that_grouping_by_line_break_completed(contents=contents)
+
+    def test_content_single_item(self):
+        scraper = WitnessScraper(html=self.html_with_siglum)
+        contents = scraper.contents
+        self.confirm_that_grouping_by_line_break_completed(contents=contents)
 
 
 if __name__ == "__main__":

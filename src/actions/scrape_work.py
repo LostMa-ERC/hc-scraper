@@ -5,7 +5,7 @@ from src.models.work import WorkNotice
 from src.scrapers.work_result_page import WitnessScraperOnWorksPage, WorkMetadata
 
 
-def scrape_work(db: Database, work_notice: WorkNotice, session: requests.Session):
+def scrape_one_work(db: Database, work_notice: WorkNotice, session: requests.Session):
     # Only if the work is not yet in the database, scrape it
     if db.work_is_present(id=work_notice.id) is False:
         # Fetch the work's result page
@@ -23,6 +23,6 @@ def scrape_work(db: Database, work_notice: WorkNotice, session: requests.Session
         for witness in WitnessScraperOnWorksPage(
             work_id=work_model.id, html=html
         ).list_witnesses():
-            if db.witness_is_present(witness.work_id, witness.unit_id) is False:
+            if db.witness_is_present(witness.work_id, witness.ms_id) is False:
                 metadata = witness.model_dump()
                 db.create_witness(metadata)

@@ -8,15 +8,45 @@ from rich.progress import (
     TimeElapsedColumn,
 )
 
-from src.actions import TagPrompt, list_work_notices, scrape_one_work
+from src.actions import (
+    TagPrompt,
+    list_work_notices,
+    scrape_manuscript_page,
+    scrape_one_work,
+)
 from src.database import Database
 
-DB_PATH = "hc.duckdb"
+DB_PATH = "hsc.duckdb"
 
 
 @click.group()
 def cli():
     pass
+
+
+@cli.command("ms")
+def manuscripts():
+    db = Database(db_path=DB_PATH)
+    # Count manuscripts for progress bar
+    total = db.count_all_manuscripts()
+    completed = db.count_completed_manuscripts()
+    # Get the manuscripts and their relevant works
+    uncompleted = db.get_manuscripts_and_works()
+    with (
+        requests.session() as session,
+        Progress(
+            TextColumn("{task.description}"),
+            BarColumn(),
+            MofNCompleteColumn(),
+            TimeElapsedColumn(),
+        ) as p,
+    ):
+        t = p.add_task("Scraping", total=total, completed=completed)
+        # Get the manuscripts and their relevant works
+        for data in uncompleted:
+            ms_id, works = data
+            scrape_manuscript_page(ms=ms_id, works=works, session=session, db=db)
+            p.advance(t)
 
 
 @cli.command("works")

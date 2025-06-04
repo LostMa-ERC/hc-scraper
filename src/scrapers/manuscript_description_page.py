@@ -19,6 +19,40 @@ class ManuscriptDescriptionPage:
         assert codicology_table.name == "table"
         self.codicology = codicology_table.find_all("tr")
 
+    @classmethod
+    def group_by_line_break(cls, elements: Tag | list[Tag]) -> list[list]:
+        if not isinstance(elements, list):
+            elements = elements.contents
+        # Determine the indices of the line breaks in the element list
+        break_positions = [
+            n
+            for n, line in enumerate(elements)
+            if isinstance(line, Tag) and line.name == "br"
+        ]
+        # If the elements don't have line breaks, return the list
+        if len(break_positions) == 0:
+            return [elements]
+        # Set up the first grouping parameters
+        start = 0
+        groups = []
+        # For each break point, slice a group from the element list
+        for idx in break_positions:
+            group = [
+                elem
+                for elem in elements[start:idx]
+                if not (isinstance(elem, Tag) and elem.name == "br")
+            ]
+            groups.append(group)
+            start = idx
+        # Complete the groups with the last grouping
+        group = [
+            elem
+            for elem in elements[start:]
+            if not (isinstance(elem, Tag) and elem.name == "br")
+        ]
+        groups.append(group)
+        return groups
+
 
 class WitnessScraper(ManuscriptDescriptionPage):
     def __init__(self, html: bytes) -> None:
@@ -35,7 +69,9 @@ class WitnessScraper(ManuscriptDescriptionPage):
                     and "Bl." in text_line
                     and "=" in text_line
                 ):
-                    foliation = re.search(pattern=r"Bl.\s(.*)\s=", string=text_line)
+                    foliation = re.search(
+                        pattern=r"Bl.\s(.*)\s=|Bl.\s.(.*):", string=text_line
+                    )
                     return foliation.group(1)
 
     def find_siglum(self, work_id: int) -> str | None:
@@ -58,18 +94,15 @@ class WitnessScraper(ManuscriptDescriptionPage):
 
     def parse_contents(self) -> dict:
         content_index = {}
-        start, end = 0, 0
         elements = [element for element in self.contents.contents]
         # If the contents contain line breaks, form groups of text lines
-        for n, line in enumerate(elements):
-            end = n
-            if isinstance(line, Tag) and line.name == "br":
-                text_block = elements[start:end]
+        groups = self.group_by_line_break(elements)
+        if len(groups) > 0:
+            for text_block in groups:
                 for element in text_block:
                     if self.elem_is_work_reference(element=element):
                         key = element.get("href").split("/")[-1]
                         content_index.update({key: text_block})
-                start = n
         # If the contents did not contain any line breaks,
         # assume the contents are of only 1 item
         if content_index == {} and len(elements) > 0:
@@ -79,11 +112,8 @@ class WitnessScraper(ManuscriptDescriptionPage):
                     content_index.update({key: elements})
         return content_index
 
-    def get_siglum(self) -> str | None:
-        pass
 
-
-class PhysDescScraper(ManuscriptDescriptionPage):
+class DescriptionScraper(ManuscriptDescriptionPage):
     writing_material = None
     folio_dimensions = None
     written_area = None
@@ -104,29 +134,40 @@ class PhysDescScraper(ManuscriptDescriptionPage):
     def validate(self) -> DescriptionModel:
         return DescriptionModel.model_validate(self.__dict__)
 
+    @classmethod
+    def get_text_from_group(cls, data) -> list:
+        line_break_groups = cls.group_by_line_break(elements=data)
+        groups = []
+        for elem_list in line_break_groups:
+            description = " ".join([elem.get_text() for elem in elem_list])
+            groups.append(description)
+        return groups
+
     def parse_codicology_table(self) -> None:
         for row in self.codicology:
-            header = row.find("th").text.strip()
-            data = row.find("td").text.strip()
+            if not row.find("th"):
+                continue
+            header = row.find("th").get_text()
+            data = row.find("td")
             if header == "Beschreibstoff":
-                self.writing_material = data
+                self.writing_material = data.get_text()
             elif header == "Blattgröße":
-                self.folio_dimensions = data
-            elif header == "schriftraum":
-                self.written_area == data
+                self.folio_dimensions = self.get_text_from_group(data)
+            elif header == "Schriftraum":
+                self.written_area = self.get_text_from_group(data)
             elif header == "Spaltenzahl":
-                self.number_of_columns = data
+                self.number_of_columns = self.get_text_from_group(data)
             elif header == "Zeilenzahl":
-                self.number_of_lines = data
+                self.number_of_lines = self.get_text_from_group(data)
             elif header == "Strophengestaltung":
-                self.stanza_layout = data
+                self.stanza_layout = self.get_text_from_group(data)
             elif header == "Versgestaltung":
-                self.verse_layout = data
+                self.verse_layout = self.get_text_from_group(data)
             elif header == "Besonderheiten":
-                self.special_features = data
+                self.special_features = self.get_text_from_group(data)
             elif header == "Entstehungszeit":
-                self.date_of_creation = data
+                self.date_of_creation = data.get_text()
             elif header == "Schreibsprache":
-                self.scribal_dialect = data
+                self.scribal_dialect = self.get_text_from_group(data)
             elif header == "Schreibort":
-                self.scriptorium_location = data
+                self.scriptorium_location = self.get_text_from_group(data)

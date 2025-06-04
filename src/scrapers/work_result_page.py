@@ -68,8 +68,8 @@ class WitnessScraperOnWorksPage(WorkResultPage):
         witnesses = []
         for list_item in self.iter_witnesses():
             unit_relative_path = list_item.find_all("a")[1].get("href")
-            unit_id = int(unit_relative_path.removeprefix("/"))
+            ms_id = int(unit_relative_path.removeprefix("/"))
             status = list_item.find("a").get("title").lower()
-            model = WitnessModel(work_id=self.work_id, unit_id=unit_id, status=status)
+            model = WitnessModel(work_id=self.work_id, ms_id=ms_id, status=status)
             witnesses.append(model)
         return witnesses

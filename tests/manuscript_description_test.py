@@ -2,18 +2,22 @@ import unittest
 from pathlib import Path
 
 from src.scrapers.manuscript_description_page import (
+    DescriptionScraper,
     ManuscriptDescriptionPage,
-    PhysDescScraper,
 )
 
-HTML_FILE = (
-    Path(__file__).parent.joinpath("html").joinpath("manuscript_description_a.html")
+SIMPLE_HTML_FILE = (
+    Path(__file__).parent.joinpath("html").joinpath("manuscript_description_4204.html")
+)
+
+NESTED_HTML_FILE = (
+    Path(__file__).parent.joinpath("html").joinpath("manuscript_description_2995.html")
 )
 
 
-class ManuDescriptionTest(unittest.TestCase):
+class BaseDescriptionPageTest(unittest.TestCase):
     def setUp(self):
-        with open(HTML_FILE) as f:
+        with open(SIMPLE_HTML_FILE) as f:
             html_bytes = f.read()
         self.scraper = ManuscriptDescriptionPage(html=html_bytes)
 
@@ -31,18 +35,27 @@ class ManuDescriptionTest(unittest.TestCase):
         self.assertGreater(len(codicology), 4)
 
 
-class PhysDescTest(unittest.TestCase):
+class DescriptionTest(unittest.TestCase):
     def setUp(self):
-        with open(HTML_FILE) as f:
-            html_bytes = f.read()
-        self.scraper = PhysDescScraper(id=4204, html=html_bytes)
+        with open(SIMPLE_HTML_FILE) as f:
+            self.html_simple = f.read()
+        with open(NESTED_HTML_FILE) as f:
+            self.html_nested = f.read()
 
-    def test(self):
-        model = self.scraper.validate()
+    def test_simple(self):
+        scraper = DescriptionScraper(id=4204, html=self.html_simple)
+        model = scraper.validate()
         self.assertEqual(model.writing_material, "Papier")
-        self.assertEqual(model.number_of_columns, "1")
-        self.assertEqual(model.number_of_lines, "36-48")
+        self.assertEqual(model.number_of_columns[0], "1")
+        self.assertEqual(model.number_of_lines[0], "36-48")
         self.assertEqual(model.id, 4204)
+        self.assertEqual(model.written_area[0], "245-250 x 145 mm")
+
+    def test_nested(self):
+        scraper = DescriptionScraper(id="2995", html=self.html_nested)
+        model = scraper.validate()
+        two_column_descriptions = ["Bl. 1-22: 3 ", "Bl. 23-108: 2"]
+        self.assertEqual(model.number_of_columns, two_column_descriptions)
 
 
 if __name__ == "__main__":
