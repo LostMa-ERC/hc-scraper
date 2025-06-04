@@ -1,7 +1,11 @@
 import requests
 
 from src.database import Database
-from src.scrapers.manuscript_description_page import DescriptionScraper, WitnessScraper
+from src.scrapers.manuscript_description_page import (
+    DescriptionScraper,
+    DocumentScraper,
+    WitnessScraper,
+)
 
 
 def scrape_manuscript_page(
@@ -17,6 +21,7 @@ def scrape_manuscript_page(
     try:
         witness_scraper = WitnessScraper(html=html)
         description = DescriptionScraper(id=ms, html=html).validate()
+        document_scraper = DocumentScraper(html=html, ms_id=ms)
     except Exception as e:
         print(url)
         raise e
@@ -28,3 +33,5 @@ def scrape_manuscript_page(
             sql = "update Witness set siglum = ? where work_id = ? and ms_id = ?"
             params = [siglum, work_id, ms]
             db.conn.execute(sql, parameters=params)
+    for doc_data in document_scraper.list_documents():
+        db.create_document(data=doc_data.model_dump())

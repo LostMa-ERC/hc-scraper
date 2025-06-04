@@ -1,9 +1,13 @@
 import re
+from typing import Generator
 
 from bs4 import BeautifulSoup, Tag
 from bs4.element import NavigableString
 
 from src.models.description import DescriptionModel
+from src.models.document import DocumentModel
+
+from .base import BaseScraperClass
 
 
 class ManuscriptDescriptionPage:
@@ -113,7 +117,7 @@ class WitnessScraper(ManuscriptDescriptionPage):
         return content_index
 
 
-class DescriptionScraper(ManuscriptDescriptionPage):
+class DescriptionScraper(ManuscriptDescriptionPage, BaseScraperClass):
     writing_material = None
     folio_dimensions = None
     written_area = None
@@ -171,3 +175,63 @@ class DescriptionScraper(ManuscriptDescriptionPage):
                 self.scribal_dialect = self.get_text_from_group(data)
             elif header == "Schreibort":
                 self.scriptorium_location = self.get_text_from_group(data)
+
+
+class DocumentScraper(ManuscriptDescriptionPage):
+    def __init__(self, html: bytes, ms_id: int):
+        self.ms_id = ms_id
+        super().__init__(html)
+
+    def list_documents(self) -> Generator[DocumentModel, None, None]:
+        for table_row in self.places:
+            doc_id = table_row.get("id")
+            doc_type = self.get_type(tr=table_row)
+
+            yield DocumentModel(
+                id=doc_id,
+                ms_id=self.ms_id,
+                city=self.get_city(tr=table_row),
+                institution=self.get_intitution(tr=table_row),
+                shelfmark=self.get_shelfmark(tr=table_row),
+                type=doc_type,
+                numbering=self.get_numbering(tr=table_row),
+            )
+
+    @classmethod
+    def _get_location_data(cls, tr: Tag) -> tuple[Tag, list[Tag]]:
+        location_data = tr.find("td", class_="ort")
+        links = location_data.find_all("a")
+        return location_data, links
+
+    @classmethod
+    def get_city(cls, tr: Tag) -> str:
+        location_data, links = cls._get_location_data(tr)
+        city_link = links[0]
+        href = city_link.get("href")
+        return href.split("/")[-1]
+
+    @classmethod
+    def get_intitution(cls, tr: Tag) -> str:
+        location_data, _ = cls._get_location_data(tr)
+        parts = [part for part in location_data.children]
+        institution_string: str = parts[1]
+        s = institution_string.strip()
+        s = s.removeprefix(", ")
+        s = s.removesuffix(",")
+        return s
+
+    @classmethod
+    def get_shelfmark(cls, tr: Tag) -> str:
+        location_data, _ = cls._get_location_data(tr)
+        parts = [part for part in location_data.children]
+        return parts[-1].text
+
+    @classmethod
+    def get_type(cls, tr: Tag) -> str:
+        return tr.find("td", class_="art").text
+
+    @classmethod
+    def get_numbering(cls, tr: Tag) -> str | None:
+        data = tr.find("td", class_="umf")
+        if data:
+            return data.text

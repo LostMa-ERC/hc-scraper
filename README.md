@@ -41,11 +41,11 @@ title: Data Model
 ---
 erDiagram
     direction LR
-    Werke ||--o{ Witness : manifests
+    CreativeWork ||--o{ Witness : manifests
     Witness }|--|| ManuscriptDescription : in
-    ManuscriptDescription }|--|{ Document : in
+    ManuscriptDescription }|--|{ LibraryItem : in
 
-    Werke{
+    CreativeWork{
         INT id PK
         TEXT title
         STRING status
@@ -74,7 +74,7 @@ erDiagram
         TEXT scriptorium_location
     }
 
-    Document {
+    LibraryItem {
         VARCHAR id PK
         INT ms_id FK
         VARCHAR shelfmark
@@ -89,7 +89,7 @@ erDiagram
 
 Key: `WP` = Page that describes the work; `CP` = Page that describes the manuscript / codicological unit.
 
-**Werke**
+**CreativeWork**
 
 ||id (PK)|title|status|references|
 |--|--|--|--|--|
@@ -110,7 +110,7 @@ Key: `WP` = Page that describes the work; `CP` = Page that describes the manuscr
 ||4204|Papier|298 x 203 mm und 295 x 205 mm|245-250 x 145 mm|1|36-48|Namenseintrag ([b], Vorsatzblatt): Johan Doringk||2. Viertel 16. Jh. (Zimmermann S. 222, 223)|südrheinfrk. mit mittelfrk. Schreibeigentümlichkeiten (Zimmermann S. 222, 223)|
 |_data source_|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|
 
-**Document**
+**LibraryItem**
 
 ||id (PK)|ms_id|shelfmark|type|numbering|city|institution|
 |--|--|--|--|--|--|--|--|

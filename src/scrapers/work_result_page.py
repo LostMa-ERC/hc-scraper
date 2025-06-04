@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup, Tag
 from src.models.witness import WitnessModel
 from src.models.work import WorkModel
 
+from .base import BaseScraperClass
+
 
 class WorkResultPage:
     def __init__(self, html: bytes):
@@ -20,7 +22,7 @@ class WorkResultPage:
                 yield witness
 
 
-class WorkMetadata(WorkResultPage):
+class WorkMetadata(WorkResultPage, BaseScraperClass):
     def __init__(self, id: int, html: bytes):
         self.id = id
         super().__init__(html)

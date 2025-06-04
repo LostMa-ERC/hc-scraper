@@ -5,11 +5,10 @@ class Database:
     def __init__(self, db_path: str):
         self.conn = duckdb.connect(db_path)
 
-        # Create the Werke table
-        # Name it Werke because 'Work' is a reserved keyword in SQL
+        # Create the CreativeWork table
         self.execute(
             """
-                    CREATE TABLE IF NOT EXISTS Werke (
+                    CREATE TABLE IF NOT EXISTS CreativeWork (
                     id INT PRIMARY KEY,
                     title TEXT,
                     status VARCHAR,
@@ -49,16 +48,17 @@ class Database:
                     )"""
         )
 
-        # Create the Documents table
+        # Create the LibraryItems table
         self.execute(
             """
-                    CREATE TABLE IF NOT EXISTS Document (
+                    CREATE TABLE IF NOT EXISTS LibraryItem (
                     id VARCHAR PRIMARY KEY,
                     ms_id INT,
                     shelfmark VARCHAR,
                     type VARCHAR,
                     city VARCHAR,
                     institution VARCHAR,
+                    numbering TEXT
                     )"""
         )
 
@@ -116,7 +116,10 @@ class Database:
         return self.conn.sql(sql).fetchall()
 
     def work_is_present(self, id: int) -> bool:
-        return self._is_present(table="Werke", primary_key="id", pk=id)
+        return self._is_present(table="CreativeWork", primary_key="id", pk=id)
+
+    def LibraryItem_is_present(self, id: int) -> bool:
+        return self._is_present(table="LibraryItem", primary_key="id", pk=id)
 
     def witness_is_present(self, work_id: int, ms_id: int) -> bool:
         return self._is_present(
@@ -127,7 +130,7 @@ class Database:
         return self._is_present(table="ManuscriptDescription", primary_key="id", pk=id)
 
     def create_work(self, data: dict):
-        query = "insert into Werke values ($id, $title, $status, $references)"
+        query = "insert into CreativeWork values ($id, $title, $status, $references)"
         self.execute(query, parameters=data)
 
     def create_dummy_manuscript_description(self, id: int):
@@ -151,3 +154,10 @@ class Database:
         cols = ", ".join([f"{k} = ${k}" for k in data.keys()])
         query = f"update ManuscriptDescription set {cols} where id = {id}"
         self.execute(query, parameters=data)
+
+    def create_document(self, data: dict):
+        cols = ", ".join(data.keys())
+        params = list(data.values())
+        placeholders = ", ".join(["?" for _ in params])
+        query = f"insert into LibraryItem ({cols}) values ({placeholders}) on conflict do nothing"
+        self.execute(query, parameters=params)
