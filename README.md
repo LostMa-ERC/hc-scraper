@@ -5,6 +5,8 @@
 - [Installation](#install)
 - [Methodology](#methodology)
 - [Usage](#usage)
+    - [Phase 1](#phase-1)
+    - [Phase 2](#phase-2)
 
 ## Install
 
@@ -39,26 +41,27 @@ title: Data Model
 ---
 erDiagram
     direction LR
-    WORK ||--o{ WITNESS : manifests
-    WITNESS }|--|| CODICOLOGICALUNIT : in
-    CODICOLOGICALUNIT }|--|{ DOCUMENT : in
+    Werke ||--o{ Witness : manifests
+    Witness }|--|| ManuscriptDescription : in
+    ManuscriptDescription }|--|{ Document : in
 
-    WORK{
+    Werke{
         INT id PK
         TEXT title
         STRING status
         TEXT[] references
     }
 
-    WITNESS {
+    Witness {
         INT work_id PK, FK
-        INT unit_id PK, FK
+        INT ms_id PK, FK
         VARCHAR status
         VARCHAR siglum
     }
 
-    CODICOLOGICALUNIT {
+    ManuscriptDescription {
         INT id PK
+        BOOL scraped
         VARCHAR writing_material
         VARCHAR folio_dimensions
         VARCHAR written_area
@@ -71,9 +74,9 @@ erDiagram
         TEXT scriptorium_location
     }
 
-    DOCUMENT {
+    Document {
         VARCHAR id PK
-        INT unit_id FK
+        INT ms_id FK
         VARCHAR shelfmark
         VARCHAR type
         VARCHAR numbering
@@ -86,30 +89,30 @@ erDiagram
 
 Key: `WP` = Page that describes the work; `CP` = Page that describes the manuscript / codicological unit.
 
-**WORK**
+**Werke**
 
 ||id (PK)|title|status|references|
 |--|--|--|--|--|
 ||221|'Lancelot'|complete|[DNB](https://portal.dnb.de/opac.htm?query=nid%3D4074015-8&method=simpleSearch&cqlMode=true), [lobid](https://lobid.org/gnd/4074015-8), [g-in](https://www.germanistik-im-netz.de/suchergebnisse/?q=4074015-8)
 |_data source_|[`WP`](https://handschriftencensus.de/werke/221)|[`WP`](https://handschriftencensus.de/werke/221)|[`WP`](https://handschriftencensus.de/werke/221)|[`WP`](https://handschriftencensus.de/werke/221)|
 
-**WITNESS**
+**Witness**
 
-||work_id (PK)|unit_id (PK)|status|siglum|
+||work_id (PK)|ms_id (PK)|status|siglum|
 |--|--|--|--|--|
 ||221|4204|codex|p|
 |_data source_|[`WP`](https://handschriftencensus.de/werke/221)|[`WP`](https://handschriftencensus.de/werke/221)|[`WP`](https://handschriftencensus.de/werke/221)|[`CP`](https://handschriftencensus.de/4204)|
 
-**CODICOLOGICALUNIT**
+**ManuscriptDescription**
 
 ||id (PK)|writing_material|folio_dimensions|written_area|number_of_columns|number_of_lines|special_features|verse_layout|date_of_creation|scribal_dialect|scriptorium_location|
 |--|--|--|--|--|--|--|--|--|--|--|--|
 ||4204|Papier|298 x 203 mm und 295 x 205 mm|245-250 x 145 mm|1|36-48|Namenseintrag ([b], Vorsatzblatt): Johan Doringk||2. Viertel 16. Jh. (Zimmermann S. 222, 223)|südrheinfrk. mit mittelfrk. Schreibeigentümlichkeiten (Zimmermann S. 222, 223)|
 |_data source_|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|[`CP`](https://handschriftencensus.de/4204)|
 
-**DOCUMENT**
+**Document**
 
-||id (PK)|unit_id|shelfmark|type|numbering|city|institution|
+||id (PK)|ms_id|shelfmark|type|numbering|city|institution|
 |--|--|--|--|--|--|--|--|
 ||s81107|4204|Cpg 91|Codex|321 Blätter|Heidelberg|Universitätsbibl.|
 ||s115557|4204|Cpg 92|Codex|198 Blätter|Heidelberg|Universitätsbibl.|
@@ -171,4 +174,13 @@ $ python src/main.py works --choose-tags
 └──────────────────────────────────┴──────────┘
 Select the tag
 Deutscher Orden (60) [y/n]:
+```
+
+### Phase 2
+
+Iterate through a unique set of the relevant manuscript descriptions, based on the works collected, and scrape those pages for metadata that informs the witness, manuscript description, and the manuscript's documents.
+
+```console
+$ python src/main.py ms
+Scraping ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 313/313 0:00:17
 ```
