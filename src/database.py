@@ -5,10 +5,11 @@ class Database:
     def __init__(self, db_path: str):
         self.conn = duckdb.connect(db_path)
 
-        # Create the Works table
+        # Create the Werke table
+        # Name it Werke because 'Work' is a reserved keyword in SQL
         self.conn.execute(
             """
-                    Create table if not exists Works (
+                    Create table if not exists Werke (
                     id INT PRIMARY KEY,
                     title TEXT,
                     status VARCHAR,
@@ -16,10 +17,10 @@ class Database:
                     )"""
         )
 
-        # Create Codicologicaly table
+        # Create PhysDesc table
         self.conn.execute(
             """
-                    Create table if not exists Codicology (
+                    Create table if not exists PhysDesc (
                     id INT PRIMARY KEY,
                     writing_material VARCHAR,
                     folio_dimensions VARCHAR,
@@ -35,17 +36,17 @@ class Database:
                     )"""
         )
 
-        # Create the relational Witnesses table
+        # Create the relational Witness table
         self.conn.execute(
             """
-                    Create table if not exists Witnesses (
+                    Create table if not exists Witness (
                     work_id INT,
                     unit_id INT,
                     status VARCHAR,
                     siglum VARCHAR,
                     PRIMARY KEY (work_id, unit_id),
-                    FOREIGN KEY (unit_id) REFERENCES Codicology (id),
-                    FOREIGN KEY (work_id) REFERENCES Works (id)
+                    FOREIGN KEY (unit_id) REFERENCES PhysDesc (id),
+                    FOREIGN KEY (work_id) REFERENCES Werke (id)
                     )"""
         )
 
@@ -59,7 +60,7 @@ class Database:
                     type VARCHAR,
                     city VARCHAR,
                     institution VARCHAR,
-                    FOREIGN KEY (unit_id) REFERENCES Codicology (id)
+                    FOREIGN KEY (unit_id) REFERENCES PhysDesc (id)
                     )"""
         )
 
@@ -86,30 +87,30 @@ class Database:
             )
 
     def work_is_present(self, id: int) -> bool:
-        return self._is_present(table="Works", primary_key="id", pk=id)
+        return self._is_present(table="Werke", primary_key="id", pk=id)
 
     def witness_is_present(self, work_id: int, unit_id: int) -> bool:
         return self._is_present(
-            table="Witnesses", primary_key="(work_id, unit_id)", pk=(work_id, unit_id)
+            table="Witness", primary_key="(work_id, unit_id)", pk=(work_id, unit_id)
         )
 
-    def cod_unit_is_present(self, id: int) -> bool:
-        return self._is_present(table="Codicology", primary_key="id", pk=id)
+    def codicology_is_present(self, id: int) -> bool:
+        return self._is_present(table="PhysDesc", primary_key="id", pk=id)
 
     def insert_work(self, data: dict):
-        query = "insert into Works values ($id, $title, $status, $references)"
+        query = "insert into Werke values ($id, $title, $status, $references)"
         self.conn.execute(query, parameters=data)
 
     def create_dummy_codicology(self, id: int):
-        query = "insert into Codicology (id) values (?)"
+        query = "insert into PhysDesc (id) values (?)"
         self.conn.execute(query, parameters=[id])
 
     def insert_witness(self, data: dict):
         data = {k: v for k, v in data.items() if v}
-        if not self.cod_unit_is_present(id=data["unit_id"]):
+        if not self.codicology_is_present(id=data["unit_id"]):
             self.create_dummy_codicology(id=data["unit_id"])
         cols = ", ".join(data.keys())
         params = list(data.values())
         placeholders = ", ".join(["?" for _ in params])
-        query = f"insert into Witnesses ({cols}) values ({placeholders})"
+        query = f"insert into Witness ({cols}) values ({placeholders})"
         self.conn.execute(query, parameters=params)

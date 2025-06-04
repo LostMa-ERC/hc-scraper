@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 
-from src.models.codicology import CodicologyModel
+from src.models.physdesc import PhysDescModel
 
 
 class ManuscriptDescriptionPage:
@@ -17,7 +17,7 @@ class ManuscriptDescriptionPage:
         self.codicology = codicology_table.find_all("tr")
 
 
-class CodicologyScraper(ManuscriptDescriptionPage):
+class PhysDescScraper(ManuscriptDescriptionPage):
     writing_material = None
     folio_dimensions = None
     written_area = None
@@ -35,8 +35,8 @@ class CodicologyScraper(ManuscriptDescriptionPage):
         super().__init__(html)
         self.parse_codicology_table()
 
-    def validate(self) -> CodicologyModel:
-        return CodicologyModel.model_validate(self.__dict__)
+    def validate(self) -> PhysDescModel:
+        return PhysDescModel.model_validate(self.__dict__)
 
     def parse_codicology_table(self) -> None:
         for row in self.codicology:

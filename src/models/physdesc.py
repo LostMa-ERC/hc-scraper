@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 
 
-class CodicologyModel(BaseModel):
+class PhysDescModel(BaseModel):
     id: int
     writing_material: str = Field(default=None)  # Beschreibstoff
     folio_dimensions: str = Field(default=None)  # Blattgröße

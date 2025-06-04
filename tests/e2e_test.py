@@ -44,7 +44,7 @@ class WorkMetadataTest(unittest.TestCase):
                 except Exception as e:
                     print(work_notice)
                     raise e
-        n_works = self.db.conn.table("Works").count("id").fetchone()[0]
+        n_works = self.db.conn.table("Werke").count("id").fetchone()[0]
         self.assertEqual(n_works, 3)
 
 

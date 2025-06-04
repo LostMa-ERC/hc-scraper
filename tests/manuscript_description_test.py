@@ -4,8 +4,8 @@ from pathlib import Path
 from rich import print
 
 from src.scrapers.manuscript_description_page import (
-    CodicologyScraper,
     ManuscriptDescriptionPage,
+    PhysDescScraper,
 )
 
 HTML_FILE = (
@@ -38,7 +38,7 @@ class CodicologyTest(unittest.TestCase):
     def setUp(self):
         with open(HTML_FILE) as f:
             html_bytes = f.read()
-        self.scraper = CodicologyScraper(id=4204, html=html_bytes)
+        self.scraper = PhysDescScraper(id=4204, html=html_bytes)
 
     def test(self):
         model = self.scraper.validate()
