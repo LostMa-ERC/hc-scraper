@@ -1,8 +1,6 @@
 import unittest
 from pathlib import Path
 
-from rich import print
-
 from src.scrapers.manuscript_description_page import (
     ManuscriptDescriptionPage,
     PhysDescScraper,
@@ -30,11 +28,10 @@ class ManuDescriptionTest(unittest.TestCase):
 
     def test_codicology(self):
         codicology = self.scraper.codicology
-        print(codicology)
         self.assertGreater(len(codicology), 4)
 
 
-class CodicologyTest(unittest.TestCase):
+class PhysDescTest(unittest.TestCase):
     def setUp(self):
         with open(HTML_FILE) as f:
             html_bytes = f.read()
