@@ -3,9 +3,9 @@ from pathlib import Path
 
 from src.scrapers.work_result_page import WorkMetadata
 
-WORKS_PAGE_A = Path(__file__).parent.joinpath("work_a.html")
-WORKS_PAGE_B = Path(__file__).parent.joinpath("work_b.html")
-WORKS_PAGE_C = Path(__file__).parent.joinpath("work_c.html")
+WORKS_PAGE_A = Path(__file__).parent.joinpath("html").joinpath("work_a.html")
+WORKS_PAGE_B = Path(__file__).parent.joinpath("html").joinpath("work_b.html")
+WORKS_PAGE_C = Path(__file__).parent.joinpath("html").joinpath("work_c.html")
 
 # Psalm fragment
 with open(WORKS_PAGE_A) as f:

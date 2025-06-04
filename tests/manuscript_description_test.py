@@ -8,7 +8,9 @@ from src.scrapers.manuscript_description_page import (
     ManuscriptDescriptionPage,
 )
 
-HTML_FILE = Path(__file__).parent.joinpath("manuscript_description_a.html")
+HTML_FILE = (
+    Path(__file__).parent.joinpath("html").joinpath("manuscript_description_a.html")
+)
 
 
 class ManuDescriptionTest(unittest.TestCase):
