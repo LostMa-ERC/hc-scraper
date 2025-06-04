@@ -1,7 +1,12 @@
 import unittest
 from pathlib import Path
 
-from src.scrapers.manuscript_description_page import ManuscriptDescriptionPage
+from rich import print
+
+from src.scrapers.manuscript_description_page import (
+    CodicologyScraper,
+    ManuscriptDescriptionPage,
+)
 
 HTML_FILE = Path(__file__).parent.joinpath("manuscript_description_a.html")
 
@@ -23,7 +28,22 @@ class ManuDescriptionTest(unittest.TestCase):
 
     def test_codicology(self):
         codicology = self.scraper.codicology
+        print(codicology)
         self.assertGreater(len(codicology), 4)
+
+
+class CodicologyTest(unittest.TestCase):
+    def setUp(self):
+        with open(HTML_FILE) as f:
+            html_bytes = f.read()
+        self.scraper = CodicologyScraper(id=4204, html=html_bytes)
+
+    def test(self):
+        model = self.scraper.validate()
+        self.assertEqual(model.writing_material, "Papier")
+        self.assertEqual(model.number_of_columns, "1")
+        self.assertEqual(model.number_of_lines, "36-48")
+        self.assertEqual(model.id, 4204)
 
 
 if __name__ == "__main__":

@@ -16,18 +16,19 @@ class Database:
                     )"""
         )
 
-        # Create CodicologicalUnits table
+        # Create Codicologicaly table
         self.conn.execute(
             """
-                    Create table if not exists CodicologicalUnits (
+                    Create table if not exists Codicology (
                     id INT PRIMARY KEY,
                     writing_material VARCHAR,
                     folio_dimensions VARCHAR,
                     written_area VARCHAR,
                     number_of_columns VARCHAR,
                     number_of_lines VARCHAR,
-                    special_features TEXT,
+                    stanza_layout VARCHAR,
                     verse_layout VARCHAR,
+                    special_features TEXT,
                     date_of_creation TEXT,
                     scribal_dialect TEXT,
                     scriptorium_location TEXT
@@ -43,7 +44,7 @@ class Database:
                     status VARCHAR,
                     siglum VARCHAR,
                     PRIMARY KEY (work_id, unit_id),
-                    FOREIGN KEY (unit_id) REFERENCES CodicologicalUnits (id),
+                    FOREIGN KEY (unit_id) REFERENCES Codicology (id),
                     FOREIGN KEY (work_id) REFERENCES Works (id)
                     )"""
         )
@@ -58,7 +59,7 @@ class Database:
                     type VARCHAR,
                     city VARCHAR,
                     institution VARCHAR,
-                    FOREIGN KEY (unit_id) REFERENCES CodicologicalUnits (id)
+                    FOREIGN KEY (unit_id) REFERENCES Codicology (id)
                     )"""
         )
 
@@ -93,20 +94,20 @@ class Database:
         )
 
     def cod_unit_is_present(self, id: int) -> bool:
-        return self._is_present(table="CodicologicalUnits", primary_key="id", pk=id)
+        return self._is_present(table="Codicology", primary_key="id", pk=id)
 
     def insert_work(self, data: dict):
         query = "insert into Works values ($id, $title, $status, $references)"
         self.conn.execute(query, parameters=data)
 
-    def create_dummy_codicological_unit(self, id: int):
-        query = "insert into CodicologicalUnits (id) values (?)"
+    def create_dummy_codicology(self, id: int):
+        query = "insert into Codicology (id) values (?)"
         self.conn.execute(query, parameters=[id])
 
     def insert_witness(self, data: dict):
         data = {k: v for k, v in data.items() if v}
         if not self.cod_unit_is_present(id=data["unit_id"]):
-            self.create_dummy_codicological_unit(id=data["unit_id"])
+            self.create_dummy_codicology(id=data["unit_id"])
         cols = ", ".join(data.keys())
         params = list(data.values())
         placeholders = ", ".join(["?" for _ in params])
