@@ -11,7 +11,7 @@ class DescriptionModel(BaseModel):
     stanza_layout: list[str] = Field(default=[])  # Strophengestaltung
     verse_layout: list[str] = Field(default=[])  # Versgestaltung
     special_features: list[str] = Field(default=[])  # Besonderheiten
-    date_of_creation: str = Field(default=None)  # Entstehungszeit
+    date_of_creation: list[str] = Field(default=[])  # Entstehungszeit
     scribal_dialect: list[str] = Field(default=[])  # Schreibsprache
     scriptorium_location: list[str] = Field(default=[])  # Schreibort
     contents: list[str] = Field(default=[])

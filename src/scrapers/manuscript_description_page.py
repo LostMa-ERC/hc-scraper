@@ -175,7 +175,7 @@ class DescriptionScraper(ManuscriptDescriptionPage, BaseScraperClass):
             elif header == "Besonderheiten":
                 self.special_features = self.get_text_from_group(data)
             elif header == "Entstehungszeit":
-                self.date_of_creation = data.get_text()
+                self.date_of_creation = self.get_text_from_group(data)
             elif header == "Schreibsprache":
                 self.scribal_dialect = self.get_text_from_group(data)
             elif header == "Schreibort":
