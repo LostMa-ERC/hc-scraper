@@ -22,6 +22,7 @@ class Database:
                     CREATE TABLE IF NOT EXISTS ManuscriptDescription (
                     id INT PRIMARY KEY,
                     scraped BOOL DEFAULT False,
+                    contents TEXT[],
                     writing_material VARCHAR,
                     folio_dimensions VARCHAR[],
                     written_area VARCHAR[],

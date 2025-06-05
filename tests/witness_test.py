@@ -63,12 +63,12 @@ class TempTest(unittest.TestCase):
 
     def test_content_list(self):
         scraper = WitnessScraper(html=self.html_with_numbering)
-        contents = scraper.contents
+        contents = scraper.content_row
         self.confirm_that_grouping_by_line_break_completed(contents=contents)
 
     def test_content_single_item(self):
         scraper = WitnessScraper(html=self.html_with_siglum)
-        contents = scraper.contents
+        contents = scraper.content_row
         self.confirm_that_grouping_by_line_break_completed(contents=contents)
 
 
