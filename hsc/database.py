@@ -31,7 +31,7 @@ class Database:
                     stanza_layout VARCHAR[],
                     verse_layout VARCHAR[],
                     special_features TEXT[],
-                    date_of_creation TEXT,
+                    date_of_creation TEXT[],
                     scribal_dialect TEXT[],
                     scriptorium_location TEXT[]
                     )"""
