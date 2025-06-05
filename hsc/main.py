@@ -8,13 +8,13 @@ from rich.progress import (
     TimeElapsedColumn,
 )
 
-from src.actions import (
+from hsc.actions import (
     TagPrompt,
     list_work_notices,
     scrape_manuscript_page,
     scrape_one_work,
 )
-from src.database import Database
+from hsc.database import Database
 
 DB_PATH = "hsc.duckdb"
 
@@ -24,7 +24,7 @@ def cli():
     pass
 
 
-@cli.command("ms")
+@cli.command("manuscripts")
 def manuscripts():
     db = Database(db_path=DB_PATH)
     # Count manuscripts for progress bar

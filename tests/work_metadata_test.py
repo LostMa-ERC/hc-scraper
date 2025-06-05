@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from src.scrapers.work_result_page import WorkMetadata
+from hsc.scrapers.work_result_page import WorkMetadata
 
 WORKS_PAGE_A = Path(__file__).parent.joinpath("html").joinpath("work_a.html")
 WORKS_PAGE_B = Path(__file__).parent.joinpath("html").joinpath("work_b.html")

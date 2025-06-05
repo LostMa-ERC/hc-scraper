@@ -1,8 +1,8 @@
 import requests
 
-from src.models.work import WorkNotice
-from src.scrapers.tagged_works_page import TaggedWorksPage
-from src.scrapers.works_page import AllWorksPage
+from hsc.models.work import WorkNotice
+from hsc.scrapers.tagged_works_page import TaggedWorksPage
+from hsc.scrapers.works_page import AllWorksPage
 
 
 def list_work_notices(

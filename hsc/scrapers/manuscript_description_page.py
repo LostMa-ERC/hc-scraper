@@ -4,8 +4,8 @@ from typing import Generator
 from bs4 import BeautifulSoup, Tag
 from bs4.element import NavigableString
 
-from src.models.description import DescriptionModel
-from src.models.document import DocumentModel
+from hsc.models.description import DescriptionModel
+from hsc.models.document import DocumentModel
 
 from .base import BaseScraperClass
 

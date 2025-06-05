@@ -2,9 +2,9 @@ import unittest
 
 import requests
 
-from src.actions import list_work_notices, scrape_one_work
-from src.database import Database
-from src.models.work import WorkNotice
+from hsc.actions import list_work_notices, scrape_one_work
+from hsc.database import Database
+from hsc.models.work import WorkNotice
 
 work_notices = [
     WorkNotice(

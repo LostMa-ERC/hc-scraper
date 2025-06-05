@@ -1,7 +1,7 @@
 import requests
 
-from src.database import Database
-from src.scrapers.manuscript_description_page import (
+from hsc.database import Database
+from hsc.scrapers.manuscript_description_page import (
     DescriptionScraper,
     DocumentScraper,
     WitnessScraper,

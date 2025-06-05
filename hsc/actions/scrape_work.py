@@ -1,8 +1,8 @@
 import requests
 
-from src.database import Database
-from src.models.work import WorkNotice
-from src.scrapers.work_result_page import WitnessScraperOnWorksPage, WorkMetadata
+from hsc.database import Database
+from hsc.models.work import WorkNotice
+from hsc.scrapers.work_result_page import WitnessScraperOnWorksPage, WorkMetadata
 
 
 def scrape_one_work(db: Database, work_notice: WorkNotice, session: requests.Session):

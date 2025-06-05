@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from src.scrapers.works_page import AllWorksPage
+from hsc.scrapers.works_page import AllWorksPage
 
 WORKS_PAGE = Path(__file__).parent.joinpath("html").joinpath("works.html")
 

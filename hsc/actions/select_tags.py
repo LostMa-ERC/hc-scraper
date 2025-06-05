@@ -3,7 +3,7 @@ from rich.console import Console
 from rich.prompt import Confirm
 from rich.table import Table
 
-from src.scrapers.tags_page import TagsPage
+from hsc.scrapers.tags_page import TagsPage
 
 
 class TagPrompt:

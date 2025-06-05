@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from src.scrapers.manuscript_description_page import DocumentScraper
+from hsc.scrapers.manuscript_description_page import DocumentScraper
 
 HTML_FILE = (
     Path(__file__).parent.joinpath("html").joinpath("manuscript_description_2995.html")

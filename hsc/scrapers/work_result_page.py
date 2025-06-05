@@ -2,8 +2,8 @@ from typing import Generator
 
 from bs4 import BeautifulSoup, Tag
 
-from src.models.witness import WitnessModel
-from src.models.work import WorkModel
+from hsc.models.witness import WitnessModel
+from hsc.models.work import WorkModel
 
 from .base import BaseScraperClass
 

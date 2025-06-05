@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from src.scrapers.manuscript_description_page import (
+from hsc.scrapers.manuscript_description_page import (
     DescriptionScraper,
     ManuscriptDescriptionPage,
 )

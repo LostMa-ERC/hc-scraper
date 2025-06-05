@@ -1,5 +1,12 @@
 # Scrape metadata from the Handschriftencensus
 
+**TLDR;**
+
+```shell
+hsc works # Collect works
+hsc manuscripts # Collect works' witnesses / manuscripts
+```
+
 ## Table of contents
 
 - [Installation](#install)
@@ -62,16 +69,17 @@ erDiagram
     ManuscriptDescription {
         INT id PK
         BOOL scraped
+        TEXT[] contents
         VARCHAR writing_material
-        VARCHAR folio_dimensions
-        VARCHAR written_area
-        VARCHAR number_of_columns
-        VARCHAR number_of_lines
-        TEXT special_features
-        VARCHAR verse_layout
-        TEXT date_of_creation
-        TEXT scribal_dialect
-        TEXT scriptorium_location
+        VARCHAR[] folio_dimensions
+        VARCHAR[] written_area
+        VARCHAR[] number_of_columns
+        VARCHAR[] number_of_lines
+        TEXT[] special_features
+        VARCHAR[] verse_layout
+        TEXT[] date_of_creation
+        TEXT[] scribal_dialect
+        TEXT[] scriptorium_location
     }
 
     LibraryItem {
@@ -129,7 +137,7 @@ Collect works and their witnesses, and create records for all the linked codicol
 Collect all the works in the database.
 
 ```
-$ python src/main.py works
+$ hsc works
 Scraping works... ━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  391/6805 0:00:49
 ```
 
@@ -138,7 +146,7 @@ Scraping works... ━━╺━━━━━━━━━━━━━━━━━�
 Collect all the works with a certain tag.
 
 ```console
-$ python src/main.py works -t "Artus-+und+Tristanroman"
+$ hsc works -t "Artus-+und+Tristanroman"
 Scraping works... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━ 28/31 0:00:03
 ```
 
@@ -147,7 +155,7 @@ Scraping works... ━━━━━━━━━━━━━━━━━━━━�
 From a list of available tags, select which tags whose works you wish to collect.
 
 ```console
-$ python src/main.py works --choose-tags
+$ hsc works --choose-tags
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
 ┃ Tag                              ┃ Selected ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
@@ -181,6 +189,6 @@ Deutscher Orden (60) [y/n]:
 Iterate through a unique set of the relevant manuscript descriptions, based on the works collected, and scrape those pages for metadata that informs the witness, manuscript description, and the manuscript's documents.
 
 ```console
-$ python src/main.py ms
+$ hsc manuscripts
 Scraping ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 313/313 0:00:17
 ```
