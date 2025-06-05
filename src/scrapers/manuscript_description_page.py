@@ -14,7 +14,7 @@ class ManuscriptDescriptionPage:
     def __init__(self, html: bytes):
         self.__soup = BeautifulSoup(html, features="html.parser")
         self.places = self.__soup.find("table", id="places").find_all("tr", id=True)
-        self.contents = self.__soup.find("h3", id="cInhalt").next_sibling.find(
+        self.content_row = self.__soup.find("h3", id="cInhalt").next_sibling.find(
             "td", id="inhalt"
         )
         codicology_header = self.__soup.find("h3", id="cKodikologie")
@@ -98,7 +98,7 @@ class WitnessScraper(ManuscriptDescriptionPage):
 
     def parse_contents(self) -> dict:
         content_index = {}
-        elements = [element for element in self.contents.contents]
+        elements = [element for element in self.content_row.contents]
         # If the contents contain line breaks, form groups of text lines
         groups = self.group_by_line_break(elements)
         if len(groups) > 0:
@@ -134,9 +134,14 @@ class DescriptionScraper(ManuscriptDescriptionPage, BaseScraperClass):
         self.id = id
         super().__init__(html)
         self.parse_codicology_table()
+        self.contents = self.get_contents()
 
     def validate(self) -> DescriptionModel:
         return DescriptionModel.model_validate(self.__dict__)
+
+    def get_contents(self) -> list:
+        lines = self.group_by_line_break(self.content_row)
+        return ["".join([elem.get_text() for elem in line]) for line in lines]
 
     @classmethod
     def get_text_from_group(cls, data) -> list:
@@ -205,7 +210,7 @@ class DocumentScraper(ManuscriptDescriptionPage):
 
     @classmethod
     def get_city(cls, tr: Tag) -> str:
-        location_data, links = cls._get_location_data(tr)
+        _, links = cls._get_location_data(tr)
         city_link = links[0]
         href = city_link.get("href")
         return href.split("/")[-1]

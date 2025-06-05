@@ -14,3 +14,4 @@ class DescriptionModel(BaseModel):
     date_of_creation: str = Field(default=None)  # Entstehungszeit
     scribal_dialect: list[str] = Field(default=[])  # Schreibsprache
     scriptorium_location: list[str] = Field(default=[])  # Schreibort
+    contents: list[str] = Field(default=[])

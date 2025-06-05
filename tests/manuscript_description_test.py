@@ -26,7 +26,7 @@ class BaseDescriptionPageTest(unittest.TestCase):
         self.assertEqual(places, 2)
 
     def test_contents(self):
-        contents = self.scraper.contents
+        contents = self.scraper.content_row
         work_href = contents.find("a").get("href")
         self.assertEqual("/werke/221", work_href)
 
@@ -56,6 +56,11 @@ class DescriptionTest(unittest.TestCase):
         model = scraper.validate()
         two_column_descriptions = ["Bl. 1-22: 3 ", "Bl. 23-108: 2"]
         self.assertEqual(model.number_of_columns, two_column_descriptions)
+
+    def test_contents(self):
+        scraper = DescriptionScraper(id="2995", html=self.html_nested)
+        contents = scraper.contents
+        self.assertEqual(["Wolfram von Eschenbach: 'Parzival' (U [Gμ])"], contents)
 
 
 if __name__ == "__main__":
