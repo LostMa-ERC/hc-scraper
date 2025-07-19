@@ -192,3 +192,29 @@ Iterate through a unique set of the relevant manuscript descriptions, based on t
 $ hsc manuscripts
 Scraping ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 313/313 0:00:17
 ```
+
+## Extra
+
+### Installation
+
+Install [OLlama](https://ollama.com/), an open-source service to run an AI model locally. Its installation depends on your machine.
+
+```
+# On macOS (using Homebrew):
+brew install ollama
+
+# On Linux (using the official install script):
+curl -sS https://ollama.ai/install.sh | bash
+```
+
+Using OLlama, download a model from Mistral AI.
+
+```
+ollama pull mistral:7b
+```
+
+Install the version of this Python package with the LLM extension.
+
+```
+pip install .[llm]
+```
